@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class Template_Controller extends Controller
 {
     function template(){
-        return redirect('/public/template/index.html');
+        // return redirect('/public/template/index.html');
+        return redirect('/template/index.html');
     }
 }
