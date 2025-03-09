@@ -1,0 +1,66 @@
+/*  */
+/* CUSTOM SCROLLBAR */
+/*  */
+::-webkit-scrollbar {
+    height: 12px;
+    /* Set height for horizontal scrollbar */
+    width: 12px;
+    /* Set width for vertical scrollbar */
+    opacity: 0;
+    /* Start hidden */
+    transition: opacity 0.2s;
+    /* Smooth transition */
+    background: transparent;
+}
+
+[data-scrollbar]:hover::-webkit-scrollbar {
+    opacity: 1;
+    /* Show on hover */
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(200, 200, 200, 1);
+    border-radius: 10px;
+    opacity: 0;
+    /* Start hidden */
+}
+
+[data-scrollbar]:hover::-webkit-scrollbar-track {
+    opacity: 1;
+    /* Show on hover */
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #fff;
+    -webkit-box-shadow: inset 0 0 6px rgba(90, 90, 90, 0.7);
+    opacity: 0;
+    /* Start hidden */
+}
+
+[data-scrollbar]:hover::-webkit-scrollbar-thumb {
+    opacity: 1;
+    /* Show on hover */
+}
+
+
+/*  */
+/* DEMO */
+/*  */
+.container {
+    width: 100%;
+}
+
+.horizontal-scrolling__wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 20px 0;
+}
+
+.horizontal-scrolling__card {
+    flex: 0 0 auto;
+}
+
+.horizontal-scrolling__card:not(:first-child) {
+    margin-left: 20px;
+}
