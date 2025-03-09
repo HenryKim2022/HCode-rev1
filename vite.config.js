@@ -6,17 +6,33 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
+            build: {
+                outDir: 'build',
+            },
         }),
     ],
-    build: {
-        outDir: 'public/build', // Set the output directory to public/build
-        // outDir: 'build',
-        rollupOptions: {
-            output: {
-                entryFileNames: '[name].[hash].js', // Customize JS file names
-                chunkFileNames: '[name].[hash].js', // Customize chunk file names
-                assetFileNames: '[name].[hash][extname]', // Customize asset file names
-            },
-        },
-    },
 });
+
+
+
+
+
+// export default defineConfig({
+//     plugins: [
+//         laravel({
+//             input: ['resources/css/app.css', 'resources/js/app.js'],
+//             refresh: true,
+//         }),
+//     ],
+//     build: {
+//         outDir: 'public/build', // Set the output directory to public/build
+//         // outDir: 'build',
+//         rollupOptions: {
+//             output: {
+//                 entryFileNames: '[name].[hash].js', // Customize JS file names
+//                 chunkFileNames: '[name].[hash].js', // Customize chunk file names
+//                 assetFileNames: '[name].[hash][extname]', // Customize asset file names
+//             },
+//         },
+//     },
+// });
