@@ -89,7 +89,7 @@
                         <div class="col-6 col-sm-6 col-md-6 col-lg-2 px-0 pb-0">
                             <div class="card position-relative col-11 col-sm-11 col-lg-11 mb-2">
                                 <div class="lazy-load position-relative">
-                                    <img src="{{ asset('public/template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
+                                    <img src="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
                                         class="card-img-top" loading="lazy" alt="...">
                                     <a href="javascript:;" data-bs-toggle="reload" style="display: none;"></a>
                                 </div>
@@ -147,7 +147,7 @@
                         <div class="col-6 col-sm-6 col-md-6 col-lg-2 px-0 pb-0">
                             <div class="card position-relative col-11 col-sm-11 col-lg-11 mb-2">
                                 <div class="lazy-load position-relative">
-                                    <img src="{{ asset('public/template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
+                                    <img src="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
                                         class="card-img-top" loading="lazy" alt="...">
                                     <a href="javascript:;" data-bs-toggle="reload" style="display: none;"></a>
                                 </div>
@@ -229,7 +229,7 @@
                                         <div class="row g-0 align-items-stretch">
                                             <div class="col-md-4 position-relative">
                                                 <div class="lazy-load position-relative">
-                                                    <img src="{{ asset('public/template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
+                                                    <img src="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
                                                         class="card-img-top" loading="lazy" alt="...">
                                                     <a href="javascript:;" data-bs-toggle="reload"
                                                         style="display: none;"></a>
@@ -371,7 +371,7 @@
                                             <div class="row g-0 align-items-stretch">
                                             <div class="col-md-4 position-relative">
                                                 <div class="lazy-load position-relative">
-                                                    <img src="{{ asset('public/template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
+                                                    <img src="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
                                                         class="card-img-top" loading="lazy" alt="...">
                                                     <a href="javascript:;" data-bs-toggle="reload" style="display: none;"></a>
                                                 </div>
@@ -410,7 +410,7 @@
                                                     <div class="row g-0 align-items-stretch">
                                                     <div class="col-md-4 position-relative">
                                                         <div class="lazy-load position-relative">
-                                                            <img src="{{ asset('public/template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
+                                                            <img src="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
                                                                 class="card-img-top" loading="lazy" alt="...">
                                                             <a href="javascript:;" data-bs-toggle="reload" style="display: none;"></a>
                                                         </div>

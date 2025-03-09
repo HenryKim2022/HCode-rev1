@@ -60,7 +60,7 @@
                                 <input class="form-check-input" type="checkbox" name="data-bs-theme"
                                     id="layout-color-light" value="light">
                                 <label class="form-check-label" for="layout-color-light">
-                                    <img src="{{ asset('public/template/assets/images/layouts/light.png') }}?v={{ time() }}" alt="" class="img-fluid">
+                                    <img src="{{ asset('template/assets/images/layouts/light.png') }}?v={{ time() }}" alt="" class="img-fluid">
                                 </label>
                             </div>
                             <h5 class="font-14 text-center text-muted mt-2">Light</h5>
@@ -71,7 +71,7 @@
                                 <input class="form-check-input" type="checkbox" name="data-bs-theme"
                                     id="layout-color-dark" value="dark">
                                 <label class="form-check-label" for="layout-color-dark">
-                                    <img src="{{ asset('public/template/assets/images/layouts/dark.png') }}?v={{ time() }}" alt="" class="img-fluid">
+                                    <img src="{{ asset('template/assets/images/layouts/dark.png') }}?v={{ time() }}" alt="" class="img-fluid">
                                 </label>
                             </div>
                             <h5 class="font-14 text-center text-muted mt-2">Dark</h5>
@@ -87,7 +87,7 @@
                                     <input class="form-check-input" type="checkbox" name="data-layout-mode"
                                         id="layout-mode-fluid" value="fluid">
                                     <label class="form-check-label" for="layout-mode-fluid">
-                                        <img src="{{ asset('public/template/assets/images/layouts/light.png') }}?v={{ time() }}" alt="" class="img-fluid">
+                                        <img src="{{ asset('template/assets/images/layouts/light.png') }}?v={{ time() }}" alt="" class="img-fluid">
                                     </label>
                                 </div>
                                 <h5 class="font-14 text-center text-muted mt-2">Fluid</h5>
@@ -99,7 +99,7 @@
                                         <input class="form-check-input" type="checkbox" name="data-layout-mode"
                                             id="layout-mode-boxed" value="boxed">
                                         <label class="form-check-label" for="layout-mode-boxed">
-                                            <img src="{{ asset('public/template/assets/images/layouts/boxed.png') }}?v={{ time() }}" alt="" class="img-fluid">
+                                            <img src="{{ asset('template/assets/images/layouts/boxed.png') }}?v={{ time() }}" alt="" class="img-fluid">
                                         </label>
                                     </div>
                                     <h5 class="font-14 text-center text-muted mt-2">Boxed</h5>
@@ -116,7 +116,7 @@
                                 <input class="form-check-input" type="checkbox" name="data-topbar-color"
                                     id="topbar-color-light" value="light">
                                 <label class="form-check-label" for="topbar-color-light">
-                                    <img src="{{ asset('public/template/assets/images/layouts/light.png') }}?v={{ time() }}" alt="" class="img-fluid">
+                                    <img src="{{ asset('template/assets/images/layouts/light.png') }}?v={{ time() }}" alt="" class="img-fluid">
                                 </label>
                             </div>
                             <h5 class="font-14 text-center text-muted mt-2">Light</h5>
@@ -127,7 +127,7 @@
                                 <input class="form-check-input" type="checkbox" name="data-topbar-color"
                                     id="topbar-color-dark" value="dark">
                                 <label class="form-check-label" for="topbar-color-dark">
-                                    <img src="{{ asset('public/template/assets/images/layouts/topbar-dark.png') }}?v={{ time() }}" alt=""
+                                    <img src="{{ asset('template/assets/images/layouts/topbar-dark.png') }}?v={{ time() }}" alt=""
                                         class="img-fluid">
                                 </label>
                             </div>
@@ -144,7 +144,7 @@
                                     <input class="form-check-input" type="checkbox" name="data-menu-color"
                                         id="leftbar-color-light" value="light">
                                     <label class="form-check-label" for="leftbar-color-light">
-                                        <img src="{{ asset('public/template/assets/images/layouts/sidebar-light.png') }}?v={{ time() }}" alt=""
+                                        <img src="{{ asset('template/assets/images/layouts/sidebar-light.png') }}?v={{ time() }}" alt=""
                                             class="img-fluid">
                                     </label>
                                 </div>
@@ -156,7 +156,7 @@
                                     <input class="form-check-input" type="checkbox" name="data-menu-color"
                                         id="leftbar-color-dark" value="dark">
                                     <label class="form-check-label" for="leftbar-color-dark">
-                                        <img src="{{ asset('public/template/assets/images/layouts/light.png') }}?v={{ time() }}" alt="" class="img-fluid">
+                                        <img src="{{ asset('template/assets/images/layouts/light.png') }}?v={{ time() }}" alt="" class="img-fluid">
                                     </label>
                                 </div>
                                 <h5 class="font-14 text-center text-muted mt-2">Dark</h5>
@@ -173,7 +173,7 @@
                                     <input class="form-check-input" type="checkbox" name="data-sidenav-size"
                                         id="leftbar-size-default" value="default">
                                     <label class="form-check-label" for="leftbar-size-default">
-                                        <img src="{{ asset('public/template/assets/images/layouts/light.png') }}?v={{ time() }}" alt="" class="img-fluid">
+                                        <img src="{{ asset('template/assets/images/layouts/light.png') }}?v={{ time() }}" alt="" class="img-fluid">
                                     </label>
                                 </div>
                                 <h5 class="font-14 text-center text-muted mt-2">Default</h5>
@@ -184,7 +184,7 @@
                                     <input class="form-check-input" type="checkbox" name="data-sidenav-size"
                                         id="leftbar-size-compact" value="compact">
                                     <label class="form-check-label" for="leftbar-size-compact">
-                                        <img src="{{ asset('public/template/assets/images/layouts/compact.png') }}?v={{ time() }}" alt=""
+                                        <img src="{{ asset('template/assets/images/layouts/compact.png') }}?v={{ time() }}" alt=""
                                             class="img-fluid">
                                     </label>
                                 </div>
@@ -196,7 +196,7 @@
                                     <input class="form-check-input" type="checkbox" name="data-sidenav-size"
                                         id="leftbar-size-small" value="condensed">
                                     <label class="form-check-label" for="leftbar-size-small">
-                                        <img src="{{ asset('public/template/assets/images/layouts/sm.png') }}?v={{ time() }}" alt="" class="img-fluid">
+                                        <img src="{{ asset('template/assets/images/layouts/sm.png') }}?v={{ time() }}" alt="" class="img-fluid">
                                     </label>
                                 </div>
                                 <h5 class="font-14 text-center text-muted mt-2">Condensed</h5>
@@ -208,7 +208,7 @@
                                     <input class="form-check-input" type="checkbox" name="data-sidenav-size"
                                         id="leftbar-size-full" value="full">
                                     <label class="form-check-label" for="leftbar-size-full">
-                                        <img src="{{ asset('public/template/assets/images/layouts/full.png') }}?v={{ time() }}" alt="" class="img-fluid">
+                                        <img src="{{ asset('template/assets/images/layouts/full.png') }}?v={{ time() }}" alt="" class="img-fluid">
                                     </label>
                                 </div>
                                 <h5 class="font-14 text-center text-muted mt-2">Full Layout</h5>

@@ -4,13 +4,6 @@
     </IfModule>
 
     RewriteEngine On
-	
-	# Redirect all requests to the public folder
-    RewriteCond %{REQUEST_URI} !^/public/
-    RewriteRule ^(.*)$ /public/$1 [L]
-	
-    # Serve assets from the public/build directory
-    RewriteRule ^build/(.*)$ public/build/$1 [L]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .

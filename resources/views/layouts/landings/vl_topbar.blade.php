@@ -8,11 +8,11 @@
                 <!-- Logo light -->
                 <a href="index.html" class="logo-light">
                     <span class="logo-lg">
-                        <img src="{{ asset('public/template/assets/images/logo.png') }}?v={{ time() }}"
+                        <img src="{{ asset('template/assets/images/logo.png') }}?v={{ time() }}"
                             alt="logo">
                     </span>
                     <span class="logo-sm">
-                        <img src="{{ asset('public/template/assets/images/logo-sm.png') }}?v={{ time() }}"
+                        <img src="{{ asset('template/assets/images/logo-sm.png') }}?v={{ time() }}"
                             alt="small logo">
                     </span>
                 </a>
@@ -20,11 +20,11 @@
                 <!-- Logo Dark -->
                 <a href="index.html" class="logo-dark">
                     <span class="logo-lg">
-                        <img src="{{ asset('public/template/assets/images/logo-dark.png') }}?v={{ time() }}"
+                        <img src="{{ asset('template/assets/images/logo-dark.png') }}?v={{ time() }}"
                             alt="dark logo">
                     </span>
                     <span class="logo-sm">
-                        <img src="{{ asset('public/template/assets/images/logo-sm.png') }}?v={{ time() }}"
+                        <img src="{{ asset('template/assets/images/logo-sm.png') }}?v={{ time() }}"
                             alt="small logo">
                     </span>
                 </a>
@@ -78,7 +78,7 @@
                     aria-haspopup="false" aria-expanded="false">
                     @foreach ($languages as $locale => $language)
                         @if ($locale == $currentLocale)
-                            <img src="{{ asset('public/template/assets/images/flags/' . strtolower($locale) . '.png') }}?v={{ time() }}"
+                            <img src="{{ asset('template/assets/images/flags/' . strtolower($locale) . '.png') }}?v={{ time() }}"
                                 alt="user-image" class="me-0 me-sm-1" height="12">
                             <span class="align-middle d-none d-lg-inline-block">{{ $language }}</span>
                         @endif
@@ -88,7 +88,7 @@
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
                     @foreach ($languages as $locale => $language)
                         <a href="{{ route('lang.switch', $locale) }}" class="dropdown-item">
-                            <img src="{{ asset('public/template/assets/images/flags/' . strtolower($locale) . '.png') }}?v={{ time() }}"
+                            <img src="{{ asset('template/assets/images/flags/' . strtolower($locale) . '.png') }}?v={{ time() }}"
                                 alt="user-image" class="me-1" height="12"> <span
                                 class="align-middle">{{ $language }}</span>
                         </a>
@@ -125,7 +125,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0">
                                         <div class="notify-icon">
-                                            <img src="{{ asset('public/template/assets/images/users/avatar-1.jpg') }}?v={{ time() }}"
+                                            <img src="{{ asset('template/assets/images/users/avatar-1.jpg') }}?v={{ time() }}"
                                                 class="img-fluid rounded-circle" alt="" />
                                         </div>
                                     </div>
@@ -148,7 +148,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0">
                                         <div class="notify-icon">
-                                            <img src="{{ asset('public/template/assets/images/users/avatar-2.jpg') }}?v={{ time() }}"
+                                            <img src="{{ asset('template/assets/images/users/avatar-2.jpg') }}?v={{ time() }}"
                                                 class="img-fluid rounded-circle" alt="" />
                                         </div>
                                     </div>
@@ -170,7 +170,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0">
                                         <div class="notify-icon">
-                                            <img src="{{ asset('public/template/assets/images/users/avatar-3.jpg') }}?v={{ time() }}"
+                                            <img src="{{ asset('template/assets/images/users/avatar-3.jpg') }}?v={{ time() }}"
                                                 class="img-fluid rounded-circle" alt="" />
                                         </div>
                                     </div>
@@ -191,7 +191,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0">
                                         <div class="notify-icon">
-                                            <img src="{{ asset('public/template/assets/images/users/avatar-4.jpg') }}?v={{ time() }}"
+                                            <img src="{{ asset('template/assets/images/users/avatar-4.jpg') }}?v={{ time() }}"
                                                 class="img-fluid rounded-circle" alt="" />
                                         </div>
                                     </div>
@@ -214,7 +214,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0">
                                         <div class="notify-icon">
-                                            <img src="{{ asset('public/template/assets/images/users/avatar-5.jpg') }}?v={{ time() }}"
+                                            <img src="{{ asset('template/assets/images/users/avatar-5.jpg') }}?v={{ time() }}"
                                                 class="img-fluid rounded-circle" alt="" />
                                         </div>
                                     </div>
@@ -346,7 +346,7 @@
                 <a class="nav-link dropdown-toggle arrow-none nav-user" data-bs-toggle="dropdown" href="#"
                     role="button" aria-haspopup="false" aria-expanded="false">
                     <span class="account-user-avatar">
-                        <img src="{{ asset('public/template/assets/images/users/avatar-1.jpg') }}?v={{ time() }}"
+                        <img src="{{ asset('template/assets/images/users/avatar-1.jpg') }}?v={{ time() }}"
                             alt="user-image" width="32" class="rounded-circle">
                     </span>
                     <span class="d-lg-block d-none">

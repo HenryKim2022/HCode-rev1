@@ -34,7 +34,7 @@
     <div class="row">
         <div class="col-sm-6 col-lg-3">
             <div class="card position-relative">
-                <img src="{{ asset('public/template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
+                <img src="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
                     class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><a href="#" class="text-success stretched-link">Card with
@@ -50,7 +50,7 @@
         </div> <!-- end col-->
         <div class="col-sm-6 col-lg-3">
             <div class="card">
-                <img src="{{ asset('public/template/assets/images/small/small-3.jpg') }}?v={{ time() }}"
+                <img src="{{ asset('template/assets/images/small/small-3.jpg') }}?v={{ time() }}"
                     class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><a href="#" class="text-success stretched-link">Card with
@@ -63,7 +63,7 @@
         </div> <!-- end col-->
         <div class="col-sm-6 col-lg-3">
             <div class="card">
-                <img src="{{ asset('public/template/assets/images/small/small-4.jpg') }}?v={{ time() }}"
+                <img src="{{ asset('template/assets/images/small/small-4.jpg') }}?v={{ time() }}"
                     class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Card with stretched link</h5>
@@ -77,7 +77,7 @@
         </div> <!-- end col-->
         <div class="col-sm-6 col-lg-3">
             <div class="card">
-                <img src="{{ asset('public/template/assets/images/small/small-1.jpg') }}?v={{ time() }}"
+                <img src="{{ asset('template/assets/images/small/small-1.jpg') }}?v={{ time() }}"
                     class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><a href="#" class="stretched-link">Card with stretched
@@ -303,7 +303,7 @@
                                 <ul class="conversation-list">
                                     <li class="clearfix">
                                         <div class="chat-avatar">
-                                            <img src="{{ asset('public/template/assets/images/users/avatar-5.jpg') }}?v={{ time() }}"
+                                            <img src="{{ asset('template/assets/images/users/avatar-5.jpg') }}?v={{ time() }}"
                                                 alt="male">
                                             <i>10:00</i>
                                         </div>
@@ -318,7 +318,7 @@
                                     </li>
                                     <li class="clearfix odd">
                                         <div class="chat-avatar">
-                                            <img src="{{ asset('public/template/assets/images/users/avatar-1.jpg') }}?v={{ time() }}"
+                                            <img src="{{ asset('template/assets/images/users/avatar-1.jpg') }}?v={{ time() }}"
                                                 alt="Female">
                                             <i>10:01</i>
                                         </div>
@@ -333,7 +333,7 @@
                                     </li>
                                     <li class="clearfix">
                                         <div class="chat-avatar">
-                                            <img src="{{ asset('public/template/assets/images/users/avatar-5.jpg') }}?v={{ time() }}"
+                                            <img src="{{ asset('template/assets/images/users/avatar-5.jpg') }}?v={{ time() }}"
                                                 alt="male">
                                             <i>10:01</i>
                                         </div>
@@ -348,7 +348,7 @@
                                     </li>
                                     <li class="clearfix odd">
                                         <div class="chat-avatar">
-                                            <img src="{{ asset('public/template/assets/images/users/avatar-1.jpg') }}?v={{ time() }}"
+                                            <img src="{{ asset('template/assets/images/users/avatar-1.jpg') }}?v={{ time() }}"
                                                 alt="male">
                                             <i>10:02</i>
                                         </div>
