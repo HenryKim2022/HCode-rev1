@@ -9,8 +9,8 @@ export default defineConfig({
         }),
     ],
     build: {
-        // outDir: 'public/build', // Set the output directory to public/build
-        outDir: 'build',
+        outDir: 'public/build', // Set the output directory to public/build
+        // outDir: 'build',
         rollupOptions: {
             output: {
                 entryFileNames: '[name].[hash].js', // Customize JS file names
