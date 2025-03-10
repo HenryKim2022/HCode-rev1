@@ -1,66 +1,168 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel 11.0 Installation and Configuration Guide
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Project Dependencies
 
-## About Laravel
+1. PHP >= 8.2
+2. Extensions: curl and all basic extensions
+3. Composer
+4. NPM
+5. Vite
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Install Laravel 11.0
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. Install Composer and set its PHP path.
+2. Go to the project root, open VSCode or Git Bash, and run:
+   ```bash
+   composer create-project --prefer-dist laravel/laravel:^11.0 ./
+   ```
+3. Set up the environment file:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+4. Edit the `.env` file in the project root:
+   ```env
+   APP_NAME=Laravel
+   APP_ALIAS="HCode"
+   APP_DEV="Henry .K"
+   APP_OWNER="${APP_DEV}"
+   APP_YEAR="2025"
+   APP_ENV=local
+   APP_DEBUG=true
+   APP_TIMEZONE=ASIA/JAKARTA
+   APP_URL=http://localhost
+   
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=your_database_name
+   DB_USERNAME=your_username
+   DB_PASSWORD=your_password
+   
+   MAIL_MAILER=smtp
+   MAIL_HOST=smtp.gmail.com
+   MAIL_PORT=587
+   MAIL_USERNAME=xxx@gmail.com
+   MAIL_PASSWORD="xxxx xxxx xxxx xxxx"
+   MAIL_ENCRYPTION=tls
+   MAIL_FROM_ADDRESS="xxx@gmail.com"
+   MAIL_FROM_NAME="${APP_OWNER}"
+   ```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Configure Web Root for Laravel (Web Hosting Support)
 
-## Learning Laravel
+1. Go to `root/public`.
+2. Copy and paste `.htaccess` into the `root` directory and modify `.htaccess`:
+   ```apache
+   <IfModule mod_rewrite.c>
+       <IfModule mod_negotiation.c>
+           Options -MultiViews -Indexes
+       </IfModule>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+       RewriteEngine On
+       
+       # Redirect all requests to the public folder
+       RewriteCond %{REQUEST_URI} !^/public/
+       RewriteRule ^(.*)$ /public/$1 [L]
+       
+       # Serve assets from the public/build directory
+       RewriteRule ^build/(.*)$ public/build/$1 [L]
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+       # Handle Authorization Header
+       RewriteCond %{HTTP:Authorization} .
+       RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+       # Redirect Trailing Slashes If Not A Folder...
+       RewriteCond %{REQUEST_FILENAME} !-d
+       RewriteCond %{REQUEST_URI} (.+)/$
+       RewriteRule ^ %1 [L,R=301]
 
-## Laravel Sponsors
+       # Send Requests To Front Controller...
+       RewriteCond %{REQUEST_FILENAME} !-d
+       RewriteCond %{REQUEST_FILENAME} !-f
+       RewriteRule ^ index.php [L]
+   </IfModule>
+   ```
+3. Set the assets (CSS/JS) path without "public/template":
+   ```html
+   <img src="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}" class="card-img-top" loading="lazy" alt="...">
+   <script src="{{ asset('template/assets/js/config.js') }}?v={{ time() }}"></script>
+   <link href="{{ asset('template/assets/css/icons.min.css') }}?v={{ time() }}" rel="stylesheet" type="text/css" />
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Compile Assets (app.css & app.js) Using Laravel Vite
 
-### Premium Partners
+1. Install Vite:
+   ```bash
+   composer require laravel/vite-plugin
+   npm install --save-dev vite laravel-vite-plugin
+   ```
+2. Create a Vite configuration file named `vite.config.js` in the root of your project:
+   ```javascript
+   import { defineConfig } from 'vite';
+   import laravel from 'laravel-vite-plugin';
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+   export default defineConfig({
+       plugins: [
+           laravel({
+               input: ['resources/css/app.css', 'resources/js/app.js'],
+               refresh: true,
+               build: {
+                   outDir: 'build',
+               },
+           }),
+       ],
+   });
+   ```
+3. Add scripts to your `package.json` for building and running Vite:
+   ```json
+   "scripts": {
+       "dev": "vite",
+       "build": "vite build"
+   }
+   ```
+4. Update your Blade template to use the `@vite` directive:
+   ```html
+   <head>
+       @vite(['resources/css/app.css', 'resources/js/app.js'])
+   </head>
+   ```
+5. Run Vite watcher while developing:
+   ```bash
+   npm run dev
+   ```
+6. Compile the `app.css` & `app.js` for web hosting support:
+   ```bash
+   npm run build
+   ```
 
-## Contributing
+## Fix CSS/JS Not Loading (Optional, Web Hosting Support)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Go to `app/Providers/AppServiceProvider.php` and modify:
+   ```php
+   <?php
+   namespace App\Providers;
 
-## Code of Conduct
+   use Illuminate\Support\ServiceProvider;
+   use Illuminate\Support\Facades\URL;
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+   class AppServiceProvider extends ServiceProvider
+   {
+       public function register(): void
+       {
+           // ADDED: FIX CSS NOT LOADING IN HTTPS
+           if (env('APP_ENV') === 'local' && request()->server('HTTP_X_FORWARDED_PROTO') === 'https') {
+               URL::forceScheme('https');
+           }
+       }
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+       public function boot(): void
+       {
+           // ADDED: FIX CSS NOT LOADING IN HTTPS
+           if (env('APP_ENV') !== 'local') {
+               URL::forceScheme('https');
+           }
+       }
+   }
+   ?>
+   ```
