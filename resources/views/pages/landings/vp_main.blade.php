@@ -94,12 +94,6 @@
                                     @endphp
                                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 px-0 pb-0">
                                         <div class="card position-relative col-11 col-sm-11 col-lg-11 shadow-md mb-2">
-                                            {{-- <div class="lazy-load position-relative">
-                                                <img src="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
-                                                    class="card-img-top" loading="lazy" alt="...">
-                                                <a href="javascript:;" data-bs-toggle="reload" style="display: none;"></a>
-                                            </div> --}}
-
                                             <div class="lazy-load pswp-gallery position-relative">
                                                 <a href="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
                                                     data-pswp-width="1650" data-caption="This is a caption 1"
@@ -161,12 +155,6 @@
                                     @endphp
                                     <div class="col-6 col-sm-6 col-md-6 col-lg-3 px-0 pb-0">
                                         <div class="card position-relative col-11 col-sm-11 col-lg-11 shadow-md mb-2">
-                                            {{-- <div class="lazy-load position-relative">
-                                                <img src="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
-                                                    class="card-img-top" loading="lazy" alt="...">
-                                                <a href="javascript:;" data-bs-toggle="reload" style="display: none;"></a>
-                                            </div> --}}
-
                                             <div class="lazy-load pswp-gallery position-relative">
                                                 <a href="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
                                                     data-pswp-width="1650" data-caption="This is a caption 1"
@@ -254,14 +242,6 @@
                                                 <div class="row d-flex g-0 justify-content-between gap-2">
                                                     <div class="row g-0 align-items-stretch">
                                                         <div class="col-md-4 position-relative">
-                                                            {{-- <div class="lazy-load position-relative">
-                                                                <img src="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
-                                                                    class="card-img-top" loading="lazy" alt="...">
-                                                                <a href="javascript:;" data-bs-toggle="reload"
-                                                                    style="display: none;"></a>
-                                                            </div> --}}
-
-
                                                             <div class="pswp-gallery lazy-load position-relative">
                                                                 <a href="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
                                                                     data-pswp-width="1650" data-pswp-height="1080" data-caption="This is a caption"
@@ -409,8 +389,6 @@
                                                     <div class="row d-flex g-0 justify-content-between gap-2">
                                                         <div class="row g-0 align-items-stretch">
                                                             <div class="col-md-4 position-relative">
-
-
                                                                 <div class="pswp-gallery lazy-load position-relative">
                                                                     <a href="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
                                                                         data-pswp-width="1650" data-pswp-height="1080" data-caption="This is a caption"
@@ -420,10 +398,6 @@
                                                                             alt="...">
                                                                     </a>
                                                                 </div>
-
-
-
-
 
                                                                 <span
                                                                     class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 start-0 bg-info bg-opacity-75 px-2 py-1"
@@ -461,7 +435,6 @@
                                                                 <div class="row g-0 align-items-stretch">
                                                                     <div class="col-md-4 position-relative">
 
-
                                                                         <div class="pswp-gallery lazy-load position-relative">
                                                                             <a href="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
                                                                                 data-pswp-width="1650" data-pswp-height="1080" data-caption="This is a caption"
@@ -471,9 +444,6 @@
                                                                                     alt="...">
                                                                             </a>
                                                                         </div>
-
-
-
 
                                                                         <span
                                                                             class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 start-0 bg-info bg-opacity-75 px-2 py-1"

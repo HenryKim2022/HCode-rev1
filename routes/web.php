@@ -1,10 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Base\Template_Controller;
 use App\Http\Controllers\Base\Language_Controller;
+use App\Http\Controllers\Base\SystemController;
+use App\Http\Controllers\Base\Template_Controller;
 use App\Http\Controllers\Landings\LandingPage_Controller;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -62,6 +64,15 @@ Route::group(['middleware'=>'role:superuser,supervisor,moderator','prefix'=>'pos
         /* beberapa route di dalam group */
     });
 });
+
+
+
+Route::middleware(['auth', 'role:superuser'])->group(function () {
+    Route::get('/sys/maintenance', [SystemController::class, 'maintenance'])->name('admin.maintenance');
+    Route::post('/sys/toggle-maintenance', [SystemController::class, 'toggleMaintenance'])->name('admin.toggle-maintenance');
+    Route::post('/sys/update-app-debug', [SystemController::class, 'updateAppDebug'])->name('admin.update-app-debug');
+});
+
 
 
 require __DIR__.'/auth.php';

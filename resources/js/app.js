@@ -20,6 +20,34 @@ import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 
 
+// Function to initialize PhotoSwipe
+function initPhotoSwipe() {
+    document.querySelectorAll('.pswp-gallery').forEach((gallery) => {
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: gallery,
+            children: 'a',
+            pswpModule: PhotoSwipe,
+            showAnimationDuration: 150,
+            hideAnimationDuration: 333,
+            bgOpacity: 0.8,
+            captionContent: true,
+            closeButton: true,
+        });
+        lightbox.init();
+    });
+}
+// Listen for a custom event to reinitialize PhotoSwipe
+document.addEventListener('photoswipe:init', () => {
+    initPhotoSwipe();
+});
+document.addEventListener('DOMContentLoaded', function () {
+    // Initialize PhotoSwipe on page load
+    initPhotoSwipe();
+});
+// ENDOF: PHOTOSWIPE LIGHTBOX
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const xcontainers = document.querySelectorAll('.x-scrollable');
     xcontainers.forEach(xcontainer => {
@@ -176,74 +204,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     // ENDOF: CLOSE BUTTONS FOR ALL MODALS
 
-
-
-    // // document.querySelectorAll('.pswp-gallery').forEach((gallery) => {
-    // //     const links = gallery.querySelectorAll('a'); // Select all <a> tags
-    // //     // console.log(`Gallery contains ${links.length} items:`);
-    // //     // // links.forEach((link, index) => {
-    // //     // //     // console.log(`Item ${index + 1}:`, link.href);
-    // //     // //     // console.log(`Caption:`, link.dataset.caption); // Log the caption
-    // //     // // });
-
-    // //     const lightbox = new PhotoSwipeLightbox({
-    // //         gallery: gallery,
-    // //         children: 'a',
-    // //         pswpModule: PhotoSwipe,
-    // //         showAnimationDuration: 150,
-    // //         hideAnimationDuration: 333,
-    // //         bgOpacity: 0.8,
-    // //         captionContent: true,
-    // //         closeButton: true,
-    // //     });
-    // //     lightbox.init();
-    // // });
-
-    // initPhotoSwipe();
-    // function initPhotoSwipe() {
-    //     document.querySelectorAll('.pswp-gallery').forEach((gallery) => {
-    //         const lightbox = new PhotoSwipeLightbox({
-    //             gallery: gallery,
-    //             children: 'a',
-    //             pswpModule: PhotoSwipe,
-    //             showAnimationDuration: 150,
-    //             hideAnimationDuration: 333,
-    //             bgOpacity: 0.8,
-    //             captionContent: true,
-    //             closeButton: true,
-    //         });
-    //         lightbox.init();
-    //     });
-    // }
-    // ENDOF: PHOTOSWIPE LIGHTBOX
 });
 
 
-
-
-// Function to initialize PhotoSwipe
-function initPhotoSwipe() {
-    document.querySelectorAll('.pswp-gallery').forEach((gallery) => {
-        const lightbox = new PhotoSwipeLightbox({
-            gallery: gallery,
-            children: 'a',
-            pswpModule: PhotoSwipe,
-            showAnimationDuration: 150,
-            hideAnimationDuration: 333,
-            bgOpacity: 0.8,
-            captionContent: true,
-            closeButton: true,
-        });
-        lightbox.init();
-    });
-}
-
-// Listen for a custom event to reinitialize PhotoSwipe
-document.addEventListener('photoswipe:init', () => {
-    initPhotoSwipe();
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    // Initialize PhotoSwipe on page load
-    initPhotoSwipe();
-});
