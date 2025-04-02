@@ -626,9 +626,9 @@
 
 
             <!-- Sidebar Widgets -->
-            <div class="sidebar-widgets order-1 order-sm-2 flex-shrink-0 col-12 col-sm-12 col-md-3 col-lg-3">
+            <div class="sidebar-widgets order-1 order-sm-2 gap-1 flex-shrink-0 col-12 col-sm-12 col-md-3 col-lg-3">
                 <!-- Sidebar Widget 1 -->
-                <section class="side-widget mb-3 d-block">
+                <section class="side-widget d-block">
                     <div class="row px-0">
                         <div class="col-12 px-0">
                             <div class="card shadow-md">
@@ -659,7 +659,7 @@
                 </section>
 
                 <!-- Sidebar Widget 2 -->
-                <section class="side-widget mb-3 d-none d-sm-none d-lg-block">
+                <section class="side-widget d-none d-sm-none d-lg-block">
                     <div class="row px-0">
                         <div class="col-12 px-0">
                             <div class="card shadow-md">
@@ -690,7 +690,7 @@
                 </section>
 
                 <!-- Sidebar Widget 3 -->
-                <section class="side-widget mb-3 d-none d-sm-none d-lg-block">
+                <section class="side-widget d-none d-sm-none d-lg-block">
                     <div class="row px-0">
                         <div class="col-12 px-0">
                             <div class="card shadow-md">

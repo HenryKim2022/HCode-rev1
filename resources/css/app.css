@@ -117,7 +117,32 @@
 
 
 
-/* CUSTOM CSS: CATEGORY TAGS */
-/* .posts-tags {
-    padding: 6px 12px !important;
-} */
+html[data-bs-theme=dark] {
+    --notice-bg: white;
+    --area-title-color: white;;
+}
+
+html[data-bs-theme=light] {
+    --notice-bg: white;
+    --area-title-color: white;;
+}
+
+
+
+.alert-purple {
+    background-color: var(--notice-bg) !important; /* Fallback to dark color */
+}
+
+
+.area-title{
+    color: var(--area-title-color) !important;
+}
+
+section button{
+    color: var(--area-title-color) !important;
+}
+
+
+section .posts-tags{
+    color: var(--area-title-color) !important;
+}
