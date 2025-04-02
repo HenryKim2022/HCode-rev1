@@ -66,8 +66,7 @@
     <section>
         <section class="d-flex flex-wrap">
             <!-- Main Content -->
-            {{-- <div class=""> --}}
-            <div class="main-content flex-grow-1 me-4 col-12 col-sm-12 col-md-8 col-lg-8">
+            <div class="main-content order-2 order-sm-1 flex-grow-1 me-4 col-12 col-sm-12 col-md-8 col-lg-8">
                 <!-- Main content goes here -->
                 <section class="NPOSTS">
                     <div class="row px-0">
@@ -626,41 +625,102 @@
 
 
 
-            {{-- </div> --}}
-
-            <!-- Sidebar -->
-            {{-- <div class=""> --}}
-            <section class="side-widget flex-shrink-0 col-12 col-sm-12 col-md-3 col-lg-3">
-                <div class="row px-0">
-                    <div class="col-12 px-0">
-                        <div class="card shadow-md">
-                            <div class="card-header">
-                                <h4 class="header-title m-0">Single button dropdowns</h4>
-                            </div>
-                            <div class="card-body p-2">
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <div class="dropdown">
-                                            <button class="btn btn-light dropdown-toggle" type="button"
-                                                id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
-                                                Dropdown button
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
+            <!-- Sidebar Widgets -->
+            <div class="sidebar-widgets order-1 order-sm-2 flex-shrink-0 col-12 col-sm-12 col-md-3 col-lg-3">
+                <!-- Sidebar Widget 1 -->
+                <section class="side-widget mb-3 d-block">
+                    <div class="row px-0">
+                        <div class="col-12 px-0">
+                            <div class="card shadow-md">
+                                <div class="card-header">
+                                    <h4 class="header-title m-0">Single button dropdowns</h4>
+                                </div>
+                                <div class="card-body p-2">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <div class="dropdown">
+                                                <button class="btn btn-light dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    Dropdown button
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" href="#">Action</a>
+                                                    <a class="dropdown-item" href="#">Another action</a>
+                                                    <a class="dropdown-item" href="#">Something else here</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div> <!-- end card-body -->
-                        </div> <!-- end card-->
+                                </div> <!-- end card-body -->
+                            </div> <!-- end card-->
+                        </div>
                     </div>
-                </div>
+                </section>
 
-            </section>
-            {{-- </div> --}}
+                <!-- Sidebar Widget 2 -->
+                <section class="side-widget mb-3 d-none d-sm-none d-lg-block">
+                    <div class="row px-0">
+                        <div class="col-12 px-0">
+                            <div class="card shadow-md">
+                                <div class="card-header">
+                                    <h4 class="header-title m-0">Single button dropdowns</h4>
+                                </div>
+                                <div class="card-body p-2">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <div class="dropdown">
+                                                <button class="btn btn-light dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    Dropdown button
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" href="#">Action</a>
+                                                    <a class="dropdown-item" href="#">Another action</a>
+                                                    <a class="dropdown-item" href="#">Something else here</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end card-body -->
+                            </div> <!-- end card-->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sidebar Widget 3 -->
+                <section class="side-widget mb-3 d-none d-sm-none d-lg-block">
+                    <div class="row px-0">
+                        <div class="col-12 px-0">
+                            <div class="card shadow-md">
+                                <div class="card-header">
+                                    <h4 class="header-title m-0">Single button dropdowns</h4>
+                                </div>
+                                <div class="card-body p-2">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <div class="dropdown">
+                                                <button class="btn btn-light dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    Dropdown button
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" href="#">Action</a>
+                                                    <a class="dropdown-item" href="#">Another action</a>
+                                                    <a class="dropdown-item" href="#">Something else here</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end card-body -->
+                            </div> <!-- end card-->
+                        </div>
+                    </div>
+                </section>
+            </div>
+
 
 
         </section>
