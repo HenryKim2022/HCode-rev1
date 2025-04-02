@@ -638,17 +638,21 @@
                                 <div class="card-body p-2">
                                     <div class="row">
                                         <div class="col-auto">
-                                            <div class="dropdown">
-                                                <button class="btn btn-light dropdown-toggle" type="button"
-                                                    id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    Dropdown button
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                </div>
+                                            <div class="pswp-gallery col-2">
+                                                <ul class="list-unstyled">
+                                                    <li>
+                                                        <a href="https://m.media-amazon.com/images/I/81EhZofH2RL.jpg" data-pswp-width="1920" data-pswp-height="1080"
+                                                        data-caption="This is a caption 1">
+                                                            <img src="https://m.media-amazon.com/images/I/81EhZofH2RL.jpg" class="w-100" alt="Image 1">
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="https://img.freepik.com/free-photo/lone-tree_181624-46361.jpg" data-pswp-width="1920" data-pswp-height="1080"
+                                                        data-caption="This is a caption 2">
+                                                            <img src="https://img.freepik.com/free-photo/lone-tree_181624-46361.jpg" class="w-100" alt="Image 2">
+                                                        </a>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -700,17 +704,14 @@
                                 <div class="card-body p-2">
                                     <div class="row">
                                         <div class="col-auto">
-                                            <div class="dropdown">
-                                                <button class="btn btn-light dropdown-toggle" type="button"
-                                                    id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    Dropdown button
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                </div>
+                                            <div class="pswp-gallery col-2">
+                                                <a href="https://m.media-amazon.com/images/I/81EhZofH2RL.jpg" data-pswp-width="1920" data-pswp-height="1080">
+                                                    <img src="https://m.media-amazon.com/images/I/81EhZofH2RL.jpg" class="col-12" alt="Image 1">
+                                                </a>
+                                                <a href="https://img.freepik.com/free-photo/lone-tree_181624-46361.jpg" data-pswp-width="1920" data-pswp-height="1080">
+                                                    <img src="https://img.freepik.com/free-photo/lone-tree_181624-46361.jpg" class="col-12" alt="Image 2">
+                                                </a>
+                                                <!-- Add more images as needed -->
                                             </div>
                                         </div>
                                     </div>

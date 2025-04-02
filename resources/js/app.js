@@ -1,5 +1,12 @@
 import './bootstrap';
 
+// Import PhotoSwipe CSS
+import 'photoswipe/dist/photoswipe.css';
+// Import PhotoSwipe core
+import PhotoSwipeLightbox from 'photoswipe/lightbox';
+import PhotoSwipe from 'photoswipe';
+
+
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
@@ -170,4 +177,20 @@ document.addEventListener('DOMContentLoaded', function () {
     // ENDOF: CLOSE BUTTONS FOR ALL MODALS
 
 
+
+    // Select all galleries with the class 'pswp-gallery'
+    document.querySelectorAll('.pswp-gallery').forEach((gallery) => {
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: gallery,   // Use the DOM element directly
+            children: 'a',      // Selector for individual gallery items
+            pswpModule: PhotoSwipe,
+            showAnimationDuration: 333, // Duration of the opening animation
+            hideAnimationDuration: 333, // Duration of the closing animation
+            bgOpacity: 0.8,             // Background opacity
+            captionContent: true,       // Caption
+            closeButton: true,
+        });
+        lightbox.init();
+    });
+    // ENDOF: PHOTOSWIPE LIGHTBOX
 });

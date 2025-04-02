@@ -27,6 +27,8 @@
     <link href="{{ asset('template/assets/css/icons.min.css') }}?v={{ time() }}" rel="stylesheet" type="text/css" />
 
 
+    <link rel="stylesheet" href="{{ asset('css/photoswipe.css') }}">
+
     {{-- <link href="{{ asset('resources/css/bundle/gen_cssbudle.css') }}?v={{ time() }}" rel="stylesheet" type="text/css" /> --}}
 
 
