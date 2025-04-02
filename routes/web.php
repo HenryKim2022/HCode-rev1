@@ -67,10 +67,11 @@ Route::group(['middleware'=>'role:superuser,supervisor,moderator','prefix'=>'pos
 
 
 
-Route::middleware(['auth', 'role:superuser'])->group(function () {
-    Route::get('/sys/maintenance', [SystemController::class, 'maintenance'])->name('admin.maintenance');
-    Route::post('/sys/toggle-maintenance', [SystemController::class, 'toggleMaintenance'])->name('admin.toggle-maintenance');
-    Route::post('/sys/update-app-debug', [SystemController::class, 'updateAppDebug'])->name('admin.update-app-debug');
+// Route::middleware(['auth', 'role:superuser'])->group(function () {
+Route::middleware([])->group(function () {
+    Route::get('/sys/maintenance', [SystemController::class, 'maintenance'])->name('su.sys');
+    Route::post('/sys/toggle-maintenance', [SystemController::class, 'toggleMaintenance'])->name('su.sys.toggle-maintenance');
+    Route::post('/sys/update-app-debug', [SystemController::class, 'updateAppDebug'])->name('su.sys.update-app-debug');
 });
 
 

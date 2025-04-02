@@ -194,7 +194,7 @@
                     @php
                         $dummyCategory = ['Web Dev', 'Utility', 'Security', 'Tutorials', 'OS'];
                         $cards = [];
-                        for ($i = 0; $i < 10; $i++) {
+                        for ($i = 0; $i < 60; $i++) {
                             $randomCatIndex = random_int(0, count($dummyCategory) - 1);
                             $cards[] = [
                                 'category' => $dummyCategory[$randomCatIndex],
@@ -244,10 +244,12 @@
                                                         <div class="col-md-4 position-relative">
                                                             <div class="pswp-gallery lazy-load position-relative">
                                                                 <a href="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
-                                                                    data-pswp-width="1650" data-pswp-height="1080" data-caption="This is a caption"
+                                                                    data-pswp-width="1650" data-pswp-height="1080"
+                                                                    data-caption="This is a caption"
                                                                     style="object-fit: cover !important; height: 100% !important; width:100% !important;">
                                                                     <img src="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
-                                                                        class="card-img-top" loading="lazy" style="object-fit: cover !important; height: 100% !important; width:100% !important;"
+                                                                        class="card-img-top" loading="lazy"
+                                                                        style="object-fit: cover !important; height: 100% !important; width:100% !important;"
                                                                         alt="...">
                                                                 </a>
                                                             </div>
@@ -305,6 +307,8 @@
                                     </li>
                                 </ul>
                             </nav>
+
+
                             <script>
                                 const realStart = 0;
                                 const realEnd = {{ $cardsPerPage ?: 0 }};
@@ -382,39 +386,34 @@
                                     var end = Math.min(start + realEnd, cards.length);
                                     var selectedCategory = localStorage.getItem('selectedCategory');
                                     if (selectedCategory === 'All' || selectedCategory === null) {
-                                        for (var index = start; index < end; index++) {
+                                        for (var i = start; i < end; i++) {
                                             var cardHtml = `
-                                            <li class="col-lg-6 col-md-12">
-                                                <div class="card shadow-md">
+                                                <li class="col-lg-6 col-md-12">
+                                                    <div class="card shadow-md">
                                                     <div class="row d-flex g-0 justify-content-between gap-2">
                                                         <div class="row g-0 align-items-stretch">
-                                                            <div class="col-md-4 position-relative">
-                                                                <div class="pswp-gallery lazy-load position-relative">
-                                                                    <a href="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
-                                                                        data-pswp-width="1650" data-pswp-height="1080" data-caption="This is a caption"
-                                                                        style="object-fit: cover !important; height: 100% !important; width:100% !important;">
-                                                                        <img src="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
-                                                                            class="card-img-top" loading="lazy" style="object-fit: cover !important; height: 100% !important; width:100% !important;"
-                                                                            alt="...">
-                                                                    </a>
-                                                                </div>
-
-                                                                <span
-                                                                    class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 start-0 bg-info bg-opacity-75 px-2 py-1"
-                                                                    data-category="{{ $cards[$index]['category'] }}">
-                                                                    {{ $cards[$index]['category'] }}
-                                                                </span>
+                                                        <div class="col-md-4 position-relative">
+                                                            <div class="lazy-load pswp-gallery position-relative">
+                                                                <a href="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}" data-pswp-width="1900" data-caption="This is a caption 1" data-pswp-height="1080">
+                                                                    <img src="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
+                                                                    class="card-img-top" loading="lazy" alt="...">
+                                                                </a>
                                                             </div>
-                                                            <div class="col-md-8">
-                                                                <div class="card-body p-2">
-                                                                    <h5 class="card-title text-success">#{{ $index + 1 }}.
-                                                                        {{ $cards[$index]['title'] }}</h5>
-                                                                    <p class="card-text">{{ $cards[$index]['text'] }}</p>
-                                                                    <p class="card-text"><small
-                                                                            class="text-muted">{{ $cards[$index]['updated'] }}</small>
-                                                                    </p>
-                                                                </div> <!-- end card-body-->
-                                                            </div> <!-- end col -->
+                                                        <span
+                                                            class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 start-0 bg-info bg-opacity-75 px-2 py-1"
+                                                            data-category="${cards[i]['category']}">
+                                                            ${cards[i]['category']}
+                                                        </span>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                        <div class="card-body p-2">
+                                                            <h5 class="card-title text-success">#${i + 1}.
+                                                                ${cards[i]['title']}</h5>
+                                                            <p class="card-text">${cards[i]['text']}</p>
+                                                            <p class="card-text"><small class="text-muted">${cards[i]['updated']}</small>
+                                                            </p>
+                                                        </div> <!-- end card-body-->
+                                                        </div> <!-- end col -->
                                                         </div> <!-- end row-->
                                                     </div> <!-- end row-->
 
@@ -429,38 +428,32 @@
                                             if (cards[i]['category'] === selectedCategory) {
                                                 if (count >= start && count < end) {
                                                     var cardHtml = `
-                                                    <li class="col-lg-6 col-md-12">
-                                                        <div class="card shadow-md">
+                                                        <li class="col-lg-6 col-md-12">
+                                                            <div class="card shadow-md">
                                                             <div class="row d-flex g-0 justify-content-between gap-2">
                                                                 <div class="row g-0 align-items-stretch">
-                                                                    <div class="col-md-4 position-relative">
-
-                                                                        <div class="pswp-gallery lazy-load position-relative">
-                                                                            <a href="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
-                                                                                data-pswp-width="1650" data-pswp-height="1080" data-caption="This is a caption"
-                                                                                style="object-fit: cover !important; height: 100% !important; width:100% !important;">
-                                                                                <img src="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
-                                                                                    class="card-img-top" loading="lazy" style="object-fit: cover !important; height: 100% !important; width:100% !important;"
-                                                                                    alt="...">
-                                                                            </a>
-                                                                        </div>
-
-                                                                        <span
-                                                                            class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 start-0 bg-info bg-opacity-75 px-2 py-1"
-                                                                            data-category="{{ $cards[$index]['category'] }}">
-                                                                            {{ $cards[$index]['category'] }}
-                                                                        </span>
+                                                                <div class="col-md-4 position-relative">
+                                                                    <div class="lazy-load pswp-gallery position-relative">
+                                                                        <a href="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}" data-pswp-width="1900" data-caption="This is a caption 1" data-pswp-height="1080">
+                                                                            <img src="{{ asset('template/assets/images/small/small-2.jpg') }}?v={{ time() }}"
+                                                                            class="card-img-top" loading="lazy" alt="...">
+                                                                        </a>
                                                                     </div>
-                                                                    <div class="col-md-8">
-                                                                        <div class="card-body p-2">
-                                                                            <h5 class="card-title text-success">#{{ $index + 1 }}.
-                                                                                {{ $cards[$index]['title'] }}</h5>
-                                                                            <p class="card-text">{{ $cards[$index]['text'] }}</p>
-                                                                            <p class="card-text"><small
-                                                                                    class="text-muted">{{ $cards[$index]['updated'] }}</small>
-                                                                            </p>
-                                                                        </div> <!-- end card-body-->
-                                                                    </div> <!-- end col -->
+                                                                <span
+                                                                    class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 start-0 bg-info bg-opacity-75 px-2 py-1"
+                                                                    data-category="${cards[i]['category']}">
+                                                                    ${cards[i]['category']}
+                                                                </span>
+                                                                </div>
+                                                                <div class="col-md-8">
+                                                                <div class="card-body p-2">
+                                                                    <h5 class="card-title text-success">#${count + 1}.
+                                                                    ${cards[i]['title']}</h5>
+                                                                    <p class="card-text">${cards[i]['text']}</p>
+                                                                    <p class="card-text"><small class="text-muted">${cards[i]['updated']}</small>
+                                                                    </p>
+                                                                </div> <!-- end card-body-->
+                                                                </div> <!-- end col -->
                                                                 </div> <!-- end row-->
                                                             </div> <!-- end row-->
 
@@ -474,9 +467,9 @@
                                         }
                                     }
 
-
                                     // Dispatch a custom event to notify app.js to reinitialize PhotoSwipe
                                     document.dispatchEvent(new Event('photoswipe:init'));
+
 
                                     updatePagination(pageNumber);
                                     if (cardsList.innerHTML === '') {
