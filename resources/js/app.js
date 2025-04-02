@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
             gallery: gallery,   // Use the DOM element directly
             children: 'a',      // Selector for individual gallery items
             pswpModule: PhotoSwipe,
-            showAnimationDuration: 333, // Duration of the opening animation
+            showAnimationDuration: 150, // Duration of the opening animation
             hideAnimationDuration: 333, // Duration of the closing animation
             bgOpacity: 0.8,             // Background opacity
             captionContent: true,       // Caption
