@@ -119,20 +119,24 @@
 
 html[data-bs-theme=dark] {
     --notice-bg: white;
+    --notice-btn-close: black;
     --area-title-color: white;;
 }
 
 html[data-bs-theme=light] {
-    --notice-bg: white;
+    --notice-bg: var(--tz-alert-bg);
+    --notice-btn-close: white;
     --area-title-color: white;;
 }
 
 
 
 .alert-purple {
-    background-color: var(--notice-bg) !important; /* Fallback to dark color */
+    background-color: var(--notice-bg) !important;
 }
-
+.notice .uix_noticeInner .btn-close{
+    color: var(--notice-btn-close) !important;
+}
 
 .area-title{
     color: var(--area-title-color) !important;

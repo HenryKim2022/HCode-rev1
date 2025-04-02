@@ -110,11 +110,11 @@
                                                 </p>
                                             </div> <!-- end card-body -->
                                             <span
-                                                class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 start-0 bg-success bg-opacity-75 px-2 py-1">
+                                                class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 start-0 bg-info bg-opacity-75 px-2 py-1">
                                                 #{{ $i + 1 }}.
                                             </span>
                                             <span
-                                                class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 end-0 bg-success bg-opacity-75 px-2 py-1">
+                                                class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 end-0 bg-info bg-opacity-75 px-2 py-1">
                                                 {{ $dummyCategory[$randomCatIndex] }}
                                             </span>
                                         </div> <!-- end card -->
@@ -167,11 +167,11 @@
                                                 </p>
                                             </div> <!-- end card-body -->
                                             <span
-                                                class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 start-0 bg-success bg-opacity-75 px-2 py-1">
+                                                class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 start-0 bg-info bg-opacity-75 px-2 py-1">
                                                 #{{ $i + 1 }}.
                                             </span>
                                             <span
-                                                class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 end-0 bg-success bg-opacity-75 px-2 py-1">
+                                                class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 end-0 bg-info bg-opacity-75 px-2 py-1">
                                                 {{ $dummyCategory[$randomCatIndex] }}
                                             </span>
                                         </div> <!-- end card -->
@@ -242,7 +242,7 @@
                                                                     style="display: none;"></a>
                                                             </div>
                                                             <span
-                                                                class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 start-0 bg-success bg-opacity-75 px-2 py-1"
+                                                                class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 start-0 bg-info bg-opacity-75 px-2 py-1"
                                                                 data-category="{{ $cards[$index]['category'] }}">
                                                                 {{ $cards[$index]['category'] }}
                                                             </span>
@@ -384,7 +384,7 @@
                                                                 <a href="javascript:;" data-bs-toggle="reload" style="display: none;"></a>
                                                             </div>
                                                         <span
-                                                            class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 start-0 bg-success bg-opacity-75 px-2 py-1"
+                                                            class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 start-0 bg-info bg-opacity-75 px-2 py-1"
                                                             data-category="${cards[i]['category']}">
                                                             ${cards[i]['category']}
                                                         </span>
@@ -423,7 +423,7 @@
                                                                         <a href="javascript:;" data-bs-toggle="reload" style="display: none;"></a>
                                                                     </div>
                                                                 <span
-                                                                    class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 start-0 bg-success bg-opacity-75 px-2 py-1"
+                                                                    class="posts-tags fs-6 rounded-2 m-1 position-absolute top-0 start-0 bg-info bg-opacity-75 px-2 py-1"
                                                                     data-category="${cards[i]['category']}">
                                                                     ${cards[i]['category']}
                                                                 </span>
@@ -632,7 +632,7 @@
                     <div class="row px-0">
                         <div class="col-12 px-0">
                             <div class="card shadow-md">
-                                <div class="card-header">
+                                <div class="card-header text-bg-primary">
                                     <h4 class="header-title m-0">Single button dropdowns</h4>
                                 </div>
                                 <div class="card-body p-2">
@@ -663,7 +663,7 @@
                     <div class="row px-0">
                         <div class="col-12 px-0">
                             <div class="card shadow-md">
-                                <div class="card-header">
+                                <div class="card-header text-bg-primary">
                                     <h4 class="header-title m-0">Single button dropdowns</h4>
                                 </div>
                                 <div class="card-body p-2">
@@ -694,7 +694,7 @@
                     <div class="row px-0">
                         <div class="col-12 px-0">
                             <div class="card shadow-md">
-                                <div class="card-header">
+                                <div class="card-header text-bg-primary">
                                     <h4 class="header-title m-0">Single button dropdowns</h4>
                                 </div>
                                 <div class="card-body p-2">
