@@ -25,6 +25,27 @@ Route::get('/lang/{locale}', [Language_Controller::class, 'switchLanguage'])
 //     return view('welcome');
 // });
 
+// Test routes for various HTTP errors
+Route::get('/test-401', function () {
+    abort(code: 401); // Unauthorized
+});
+
+Route::get('/test-404', function () {
+    abort(code: 404); // Not Found
+});
+
+Route::get('/test-500', function () {
+    abort(code: 500); // Internal Server Error
+});
+
+Route::get('/test-503', function () {
+    abort(code: 503); // Service Unavailable (Maintenance Mode)
+});
+
+
+
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

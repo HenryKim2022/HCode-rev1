@@ -81,8 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-
-
     const ycontainers = document.querySelectorAll('.y-scrollable');
     ycontainers.forEach(ycontainer => {
         if (ycontainer) {
@@ -105,4 +103,71 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     });
+    // ENDOF: X AND Y SCROLLABLE
+
+
+    let currentZIndex = 1050; // Start with Bootstrap's default modal z-index
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('show.bs.modal', function () {
+            // Increment z-index for each modal
+            currentZIndex += 10;
+            modal.style.zIndex = currentZIndex;
+            // Handle nested modals
+            const parentModal = modal.closest('.modal');
+            if (parentModal) {
+                // Ensure the child modal has a higher z-index than the parent modal
+                modal.style.zIndex = parseInt(window.getComputedStyle(parentModal).zIndex) + 10;
+            }
+            // Adjust backdrop z-index to match the modal's z-index
+            const modalBackdrop = document.querySelector('.modal-backdrop');
+            if (modalBackdrop) {
+                modalBackdrop.style.zIndex = currentZIndex - 1; // Backdrop should be just below the modal
+            }
+        });
+        modal.addEventListener('hidden.bs.modal', function () {
+            modal.style.zIndex = ''; // Reset z-index when modal is hidden
+        });
+    });
+    // ENDOF: Z-INDEX FOR ALL MODALS & BACKDROPS
+
+
+    document.querySelectorAll('.modal').forEach(modal => {
+        // Find the trigger element for this modal
+        const modalTrigger = document.querySelector(`[data-bs-target="#${modal.id}"]`);
+        // Focus management when the modal is shown
+        modal.addEventListener('shown.bs.modal', function () {
+            const closeButton = modal.querySelector('.btn-close');
+            if (closeButton) {
+                closeButton.focus(); // Move focus to the close button
+            }
+        });
+        // Return focus to the trigger element when the modal is hidden
+        modal.addEventListener('hidden.bs.modal', function () {
+            if (modalTrigger) {
+                modalTrigger.focus(); // Return focus to the trigger element
+            }
+        });
+        // Trap focus inside the modal
+        modal.addEventListener('show.bs.modal', function () {
+            const focusableElements = modal.querySelectorAll(
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            );
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+            modal.addEventListener('keydown', function (e) {
+                if (e.key === 'Tab') {
+                    if (e.shiftKey && document.activeElement === firstElement) {
+                        e.preventDefault();
+                        lastElement.focus(); // Wrap focus to the last element
+                    } else if (!e.shiftKey && document.activeElement === lastElement) {
+                        e.preventDefault();
+                        firstElement.focus(); // Wrap focus to the first element
+                    }
+                }
+            });
+        });
+    });
+    // ENDOF: CLOSE BUTTONS FOR ALL MODALS
+
+
 });

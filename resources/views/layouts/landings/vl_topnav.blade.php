@@ -5,7 +5,8 @@
             <div class="collapse navbar-collapse" id="topnav-menu-content">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle arrow-none" href="index.html" id="topnav-dashboards" role="button" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle arrow-none" href="index.html" id="topnav-dashboards"
+                            role="button" aria-haspopup="true" aria-expanded="false">
                             {{-- <i class="mdi mdi-home"></i>Home --}}
                             <i class="mdi mdi-home"></i>{{ trans('language.vl_menu_home') }}
                         </a>
@@ -20,9 +21,10 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-categories" role="button"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="mdi mdi-tag-multiple-outline"></i>{{ trans('language.vl_menu_cat') }} <div class="arrow-down"></div>
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-categories"
+                            role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="mdi mdi-tag-multiple-outline"></i>{{ trans('language.vl_menu_cat') }} <div
+                                class="arrow-down"></div>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-categories">
                             <div class="dropdown">
@@ -56,12 +58,17 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-layouts" role="button"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="mdi mdi-lifebuoy"></i>{{ trans('language.vl_menu_supports') }} <div class="arrow-down"></div>
+                            <i class="mdi mdi-lifebuoy"></i>{{ trans('language.vl_menu_supports') }} <div
+                                class="arrow-down"></div>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="topnav-layouts">
-                            <a href="layouts-horizontal.html" class="dropdown-item" target="_blank">{{ trans('language.vl_menu_aboutus') }}</a>
-                            <a href="layouts-light-sidebar.html" class="dropdown-item" target="_blank">{{ trans('language.vl_menu_contactus') }}</a>
+                            <a data-bs-toggle="modal" data-bs-target="#aboutus_modal" class="dropdown-item"
+                                target="_blank">{{ trans('language.vl_menu_aboutus') }}</a>
+                            <a data-bs-toggle="modal" data-bs-target="#contactus_modal" class="dropdown-item"
+                                target="_blank">{{ trans('language.vl_menu_contactus') }}</a>
                         </div>
+                        {{-- @include('v_res.landings.modals.v_aboutus_modal')
+                        @include('v_res.landings.modals.v_contactus_modal') --}}
                     </li>
                 </ul>
             </div>
