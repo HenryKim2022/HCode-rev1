@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 // Locale Middleware Group
 Route::group(['middleware' => ['setLocale']], function () {
-    Route::get('/', [LandingPage_Controller::class, 'index']);
-    Route::get('/landing', [LandingPage_Controller::class, 'index']);
+    Route::get('/', [LandingPage_Controller::class, 'index'])->name('root');
+    Route::get('/landing', [LandingPage_Controller::class, 'index'])->name('landing.root');
     Route::get('/temp', [Template_Controller::class, 'template']);
 });
 

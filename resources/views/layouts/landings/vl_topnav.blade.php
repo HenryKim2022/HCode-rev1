@@ -5,7 +5,7 @@
             <div class="collapse navbar-collapse" id="topnav-menu-content">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle arrow-none" href="index.html" id="topnav-dashboards"
+                        <a class="nav-link dropdown-toggle arrow-none" href="{{ route('root') }}" id="topnav-dashboards"
                             role="button" aria-haspopup="true" aria-expanded="false">
                             {{-- <i class="mdi mdi-home"></i>Home --}}
                             <i class="mdi mdi-home"></i>{{ trans('language.vl_menu_home') }}
