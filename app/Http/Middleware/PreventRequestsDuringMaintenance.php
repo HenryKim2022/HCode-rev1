@@ -30,6 +30,7 @@ class PreventRequestsDuringMaintenance extends \Illuminate\Foundation\Http\Middl
 
         // Default URI exclusions
         $default_excluded_uris = [
+            'reset.php',
             'lang/*',
             '/system/settings',
             '/system/update-maintenance-exclusion',
