@@ -9,4 +9,5 @@ return [
     'vl_menu_aboutus' => 'About us',
     'vl_menu_contactus' => 'Contact us',
     // Add more translations here
+    'vl_menu_system' => 'System',
 ];

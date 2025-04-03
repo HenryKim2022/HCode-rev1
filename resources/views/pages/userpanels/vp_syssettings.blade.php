@@ -12,7 +12,7 @@
                         <ul class="nav nav-underline nav-justified gap-0">
                             <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab"
                                     data-bs-target="#system-activities-activities" type="button" role="tab"
-                                    aria-controls="home" aria-selected="true" href="#system-activities">System</a>
+                                    aria-controls="home" aria-selected="true" href="#system-activities">{{ trans('language.vl_menu_system') }}</a>
                             </li>
                             <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#x-activities"
                                     type="button" role="tab" aria-controls="home" aria-selected="true"

@@ -9,4 +9,6 @@ return [
     'vl_menu_aboutus' => 'Tentang kami',
     'vl_menu_contactus' => 'Hubungi kami',
     // Add more translations here
+    'vl_menu_system' => 'Sistem',
+
 ];
