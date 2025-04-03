@@ -95,8 +95,8 @@
                                                 @csrf
                                                 <button type="submit" class="btn btn-primary ms-2">
                                                     {!! app()->isDownForMaintenance()
-                                                        ? "<i class='mdi mdi-run-fast'></i> Maintenance Off"
-                                                        : "<i class='mdi mdi-bed'></i> Maintenance On" !!}
+                                                        ? "<i class='mdi mdi-run-fast'></i> Maintenance"
+                                                        : "<i class='mdi mdi-bed'></i> Maintenance" !!}
                                                 </button>
                                             </form>
                                         </div>
