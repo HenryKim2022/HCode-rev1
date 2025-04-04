@@ -4,11 +4,15 @@
     </IfModule>
 
     RewriteEngine On
-	
-	# Redirect all requests to the public folder
+
+    # Allow direct access to reset.php
+    RewriteCond %{REQUEST_URI} ^/reset\.php$ [NC]
+    RewriteRule .* - [L]
+
+    # Redirect all other requests to the public folder
     RewriteCond %{REQUEST_URI} !^/public/
     RewriteRule ^(.*)$ /public/$1 [L]
-	
+
     # Serve assets from the public/build directory
     RewriteRule ^build/(.*)$ public/build/$1 [L]
 

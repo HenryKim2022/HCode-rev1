@@ -72,25 +72,12 @@
 
                                                             </td>
                                                         </tr>
-                                                        {{-- <tr>
-                                                            <th scope="row">Excluded URIs</th>
-                                                            <td>
-                                                                <div class="mb-3">
-                                                                    <input type="text" class="form-control"
-                                                                        id="maintenance_excluded_uris"
-                                                                        name="maintenance_excluded_uris"
-                                                                        value="{{ $excludedUris }}">
-                                                                    <small class="form-text text-muted">Semicolon-separated
-                                                                        list of URIs (e.g.,
-                                                                        /system/settings; /landing; /admin).</small>
-                                                                </div>
-                                                            </td>
-                                                        </tr> --}}
+
                                                         <tr>
                                                             <th scope="row">Excluded URIs</th>
                                                             <td>
                                                                 <div class="mb-3">
-                                                                    <select id="maintenance_excluded_uris"
+                                                                    {{-- <select id="maintenance_excluded_uris"
                                                                         name="maintenance_excluded_uris[]"
                                                                         multiple="multiple" style="width: 100%;">
                                                                         @foreach ($routes as $route)
@@ -99,7 +86,19 @@
                                                                                 {{ $route['uri'] }}
                                                                             </option>
                                                                         @endforeach
+                                                                    </select> --}}
+
+                                                                    <select id="maintenance_excluded_uris"
+                                                                        name="maintenance_excluded_uris[]"
+                                                                        multiple="multiple" style="width: 100%;">
+                                                                        @foreach ($routes as $route)
+                                                                            <option value="{{ $route }}"
+                                                                                @if (in_array($route, $selectedUris)) selected @endif>
+                                                                                {{ $route }}
+                                                                            </option>
+                                                                        @endforeach
                                                                     </select>
+
                                                                     <small class="form-text text-muted">Select one or more
                                                                         URIs to exclude from maintenance mode.</small>
                                                                 </div>
@@ -297,26 +296,86 @@
             // Initialize Select2 for Excluded URIs
             $('#maintenance_excluded_uris').select2({
                 placeholder: "Select one or more URIs", // Placeholder text
-                allowClear: true, // Allow clearing the selection
+                allowClear: false, // Allow clearing the selection
                 closeOnSelect: false, // Keep dropdown open after selecting
+                tags: true, // Enable adding new options by typing
+                createTag: function(params) {
+                    const term = params.term.trim();
+                    if (!term) {
+                        return null; // Prevent empty tags
+                    }
+
+                    // Validate the input (e.g., ensure it matches a URI pattern)
+                    const uriPattern = /^[a-zA-Z0-9\-_\/]+$/;
+                    if (!uriPattern.test(term)) {
+                        return null; // Prevent invalid tags
+                    }
+                    // Check for duplicates
+                    const isDuplicate = $('#maintenance_excluded_uris option').filter(function() {
+                        return $(this).text().toLowerCase() === term.toLowerCase();
+                    }).length > 0;
+                    if (isDuplicate) {
+                        return null; // Prevent duplicate tags
+                    }
+                    // Create the new tag
+                    return {
+                        id: term, // Use the input as the ID
+                        text: term, // Use the input as the display text
+                    };
+                },
             });
 
-            // Disable selected options dynamically
-            $('#route-select').on('change', function() {
-                const selectedOptions = $(this).val(); // Get currently selected values
 
-                // Loop through all options and disable/enable based on selection
-                $('#route-select option').each(function() {
-                    const optionValue = $(this).val();
-                    if (selectedOptions && selectedOptions.includes(optionValue)) {
-                        $(this).prop('disabled', true); // Disable selected options
-                    } else {
-                        $(this).prop('disabled', false); // Enable unselected options
-                    }
-                });
 
-                // Refresh Select2 to reflect changes
-                $('#route-select').trigger('change.select2');
+            $('#maintenance_excluded_uris').on('select2:select', function(e) {
+                const selectedOption = e.params.data;
+
+                // Normalize the selected option's ID for comparison
+                const normalizedSelectedId = selectedOption.id.trim().toLowerCase();
+
+                // Check if the option is new (not part of the original list)
+                const isDuplicate = $('#maintenance_excluded_uris option').filter(function() {
+                    return $(this).val().trim().toLowerCase() === normalizedSelectedId;
+                }).length > 0;
+
+                if (!isDuplicate) {
+                    console.log('New option added:', selectedOption.id);
+
+                    // Send the new option to the server
+                    $.ajax({
+                        url: '/system/save-typed-uri', // Replace with your API endpoint
+                        method: 'POST',
+                        data: {
+                            newUri: selectedOption.id
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            console.log('New URI saved:', response);
+
+                            // Ensure newOption is properly defined
+                            const newOption = new Option(selectedOption.text, selectedOption.id,
+                                true, true);
+
+                            // Append the new option to the dropdown
+                            $('#maintenance_excluded_uris').append(newOption).trigger('change');
+
+                            // Disable the newly added option
+                            $(newOption).prop('disabled', true);
+
+                            // Refresh Select2 to reflect changes
+                            $('#maintenance_excluded_uris').trigger('change.select2');
+                        },
+                        error: function(error) {
+                            console.error('Error saving new URI:', error);
+                        },
+                    });
+                }else{
+                    console.log('Option already exists');
+                }
+
+
             });
         });
     </script>

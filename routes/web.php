@@ -35,6 +35,7 @@ Route::middleware(['setLocale'])->group(function () {
     Route::post('/system/update-maintenance-exclusion', [SystemController::class, 'update'])->name('syssettings.exclusionupdate');
     Route::post('/system/toggle-maintenance', [SystemController::class, 'toggleMaintenance'])->name('syssettings.togglemaintenance');
     Route::post('/system/toggle-debug', [SystemController::class, 'toggleDebug'])->name('syssettings.toggledebug');
+    Route::post('/system/save-typed-uri', [SystemController::class, 'saveTypedUri'])->name('syssettings.savetyped.uri');
 
     // Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

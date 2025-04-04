@@ -124,6 +124,8 @@ html[data-bs-theme=dark] {
     --select2js-bg: #283046;
     --select2js-color: #b4b7bd;
     --select2js-border-color: #3b4253;
+    --select2js-disabled-bg: #f0f0f0;
+    --select2js-disabled-color: #a8a8a8;
 }
 
 html[data-bs-theme=light] {
@@ -133,6 +135,9 @@ html[data-bs-theme=light] {
     --select2js-bg: #fff;
     --select2js-color: #6e6b7b;
     --select2js-border-color: #d8d6de;
+    --select2js-disabled-bg: #f0f0f0;
+    --select2js-disabled-color: #a8a8a8;
+
 }
 
 
@@ -187,3 +192,21 @@ section .posts-tags {
     background-color: var(--select2js-border-color) !important;
     color: var(--select2js-color) !important;
 }
+
+
+
+
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: var(--select2js-bg);
+    border: 1px solid var(--select2js-color);
+}
+
+
+/* Style for disabled options in Select2 */
+.select2-results__option[aria-disabled="true"] {
+    color: var(--select2js-disabled-color) !important; /* Grayed-out text color */
+    background-color: var(--select2js-disabled-bg) !important; /* Light gray background */
+    cursor: not-allowed !important; /* Change cursor to indicate it's disabled */
+}
+

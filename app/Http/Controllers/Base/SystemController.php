@@ -17,6 +17,45 @@ class SystemController extends Controller
      * Display the system settings page.
      */
 
+    // public function index($message = null)
+    // {
+    //     // Retrieve all routes and map them to their URIs
+    //     $routes = collect(Route::getRoutes())->map(function ($route) {
+    //         return [
+    //             'uri' => $route->uri(),
+    //         ];
+    //     })->filter(function ($route) {
+    //         // Exclude internal/default routes
+    //         $excludedPrefixes = ['/', '_debugbar', 'telescope', 'horizon', 'sanctum/csrf-cookie', '_ignition'];
+    //         foreach ($excludedPrefixes as $prefix) {
+    //             if (Str::startsWith($route['uri'], $prefix)) {
+    //                 return false; // Exclude routes that match any prefix
+    //             }
+    //         }
+    //         return true; // Include all other routes
+    //     })->unique('uri') // Ensure only unique URIs are included
+    //         ->values(); // Reset keys for easier handling
+
+    //     // Retrieve currently excluded URIs from settings
+    //     $selectedUris = collect(Setting::get('maintenance_excluded_uris', ''))
+    //         ->flatMap(function ($uri) {
+    //             return array_map('trim', explode(';', $uri));
+    //         })
+    //         ->filter()
+    //         ->toArray();
+
+    //     $pageData = [
+    //         'excludedIps' => Setting::get('maintenance_excluded_ips', ''),
+    //         'selectedUris' => $selectedUris,
+    //         'messages' => [$message],
+    //         'routes' => $routes,
+    //     ];
+
+    //     return view('pages.userpanels.vp_syssettings', $pageData);
+    // }
+
+
+
     public function index($message = null)
     {
         // Retrieve all routes and map them to their URIs
@@ -44,11 +83,17 @@ class SystemController extends Controller
             ->filter()
             ->toArray();
 
+        // Combine routes and selected URIs into a single collection
+        $allUris = collect($routes)->pluck('uri')
+            ->merge($selectedUris)
+            ->unique() // Ensure uniqueness
+            ->values(); // Reset keys for easier handling
+
         $pageData = [
             'excludedIps' => Setting::get('maintenance_excluded_ips', ''),
             'selectedUris' => $selectedUris,
             'messages' => [$message],
-            'routes' => $routes,
+            'routes' => $allUris, // Pass the combined URIs to the view
         ];
 
         return view('pages.userpanels.vp_syssettings', $pageData);
@@ -172,6 +217,46 @@ class SystemController extends Controller
             throw new \Exception("Failed to update the .env file at path: {$path}");
         }
     }
+
+
+    /**
+     * Save a new URI option to the backend.
+     */
+    public function saveTypedUri(Request $request)
+    {
+        $validated = $request->validate([
+            'newUri' => [
+                'required',
+                'string',
+                'regex:/^[a-zA-Z0-9\-_\/]+$/',
+            ],
+        ]);
+
+        $existingUris = collect(Setting::get('maintenance_excluded_uris', ''))
+            ->flatMap(function ($uri) {
+                return array_map('trim', explode(';', $uri));
+            })
+            ->filter()
+            ->toArray();
+
+        if (in_array($validated['newUri'], $existingUris)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'The URI already exists.',
+            ], 409); // 409 Conflict
+        }
+
+        $updatedUris = implode(';', array_merge($existingUris, [$validated['newUri']]));
+        Setting::set('maintenance_excluded_uris', $updatedUris);
+        Setting::save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'New URI added successfully.',
+        ]);
+    }
+
+
 
     /**
      * Centralized JSON response helper method.
