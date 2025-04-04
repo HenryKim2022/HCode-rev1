@@ -8,25 +8,53 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Akaunting\Setting\Facade as Setting;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 class SystemController extends Controller
 {
     /**
      * Display the system settings page.
      */
+
     public function index($message = null)
     {
-        $excludedIps = Setting::get('maintenance_excluded_ips', '');
-        $excludedUris = Setting::get('maintenance_excluded_uris', '');
+        // Retrieve all routes and map them to their URIs
+        $routes = collect(Route::getRoutes())->map(function ($route) {
+            return [
+                'uri' => $route->uri(),
+            ];
+        })->filter(function ($route) {
+            // Exclude internal/default routes
+            $excludedPrefixes = ['/', '_debugbar', 'telescope', 'horizon', 'sanctum/csrf-cookie', '_ignition'];
+            foreach ($excludedPrefixes as $prefix) {
+                if (Str::startsWith($route['uri'], $prefix)) {
+                    return false; // Exclude routes that match any prefix
+                }
+            }
+            return true; // Include all other routes
+        })->unique('uri') // Ensure only unique URIs are included
+            ->values(); // Reset keys for easier handling
+
+        // Retrieve currently excluded URIs from settings
+        $selectedUris = collect(Setting::get('maintenance_excluded_uris', ''))
+            ->flatMap(function ($uri) {
+                return array_map('trim', explode(';', $uri));
+            })
+            ->filter()
+            ->toArray();
 
         $pageData = [
-            'excludedIps' => $excludedIps,
-            'excludedUris' => $excludedUris,
+            'excludedIps' => Setting::get('maintenance_excluded_ips', ''),
+            'selectedUris' => $selectedUris,
             'messages' => [$message],
+            'routes' => $routes,
         ];
 
         return view('pages.userpanels.vp_syssettings', $pageData);
     }
+
+
 
     /**
      * Update maintenance exclusions (IPs and URIs).
@@ -50,34 +78,28 @@ class SystemController extends Controller
             ],
             'maintenance_excluded_uris' => [
                 'nullable',
-                'string',
-                'regex:/^([a-zA-Z0-9\/\-_&=?]+(;[ ]*[a-zA-Z0-9\/\-_&=?]+)*[ ]*)?$/',
-                function ($attribute, $value, $fail) {
-                    $uris = explode(';', $value);
-                    foreach ($uris as $uri) {
-                        $trimmedUri = trim($uri);
-                        if (!preg_match('/^\/[a-zA-Z0-9\/\-_&=?]*$/', $trimmedUri)) {
-                            $fail("The {$attribute} field contains an invalid URI: '{$uri}'.");
-                        }
-                    }
-                },
+                'array',
             ],
         ]);
 
+        // Convert the selected URIs array to a semicolon-separated string
+        $selectedUris = implode(';', $request->input('maintenance_excluded_uris', []));
+
         // Save the new settings
         Setting::set('maintenance_excluded_ips', $request->input('maintenance_excluded_ips'));
-        Setting::set('maintenance_excluded_uris', $request->input('maintenance_excluded_uris'));
+        Setting::set('maintenance_excluded_uris', $selectedUris);
         Setting::save();
 
         // Log the update
         Log::info('Maintenance exclusions updated.', [
             'excluded_ips' => $request->input('maintenance_excluded_ips'),
-            'excluded_uris' => $request->input('maintenance_excluded_uris'),
+            'excluded_uris' => $selectedUris,
         ]);
 
         // Return a JSON response
         return $this->jsonResponse(true, "Settings updated successfully.", route('index.syssettings'));
     }
+
 
     /**
      * Toggle maintenance mode.

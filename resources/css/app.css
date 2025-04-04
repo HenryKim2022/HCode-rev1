@@ -17,7 +17,7 @@
     scrollbar-width: thin;
     overflow-x: auto;
 } */
-.ps__rail-x{
+.ps__rail-x {
     width: 0px !important;
 }
 
@@ -120,36 +120,70 @@
 html[data-bs-theme=dark] {
     --notice-bg: white;
     --notice-btn-close: black;
-    --area-title-color: white;;
+    --area-title-color: white;
+    --select2js-bg: #283046;
+    --select2js-color: #b4b7bd;
+    --select2js-border-color: #3b4253;
 }
 
 html[data-bs-theme=light] {
     --notice-bg: var(--tz-alert-bg);
     --notice-btn-close: white;
-    --area-title-color: white;;
+    --area-title-color: white;
+    --select2js-bg: #fff;
+    --select2js-color: #6e6b7b;
+    --select2js-border-color: #d8d6de;
 }
-
 
 
 .alert-purple {
     background-color: var(--notice-bg) !important;
 }
-.notice .uix_noticeInner .btn-close{
+
+.notice .uix_noticeInner .btn-close {
     color: var(--notice-btn-close) !important;
 }
 
-.area-title{
+.area-title {
     color: var(--area-title-color) !important;
 }
 
-section button{
-    color: var(--area-title-color) !important;
-}
-
-
-section .posts-tags{
+section button {
     color: var(--area-title-color) !important;
 }
 
 
+section .posts-tags {
+    color: var(--area-title-color) !important;
+}
 
+
+
+/* select.form-control, .custom-select {
+    background-color: var(--select2js-bg) !important;
+    color: var(--select2js-color) !important;
+    border-color: var(--select2js-border-color) !important;
+} */
+
+
+
+/* Select2 styling */
+.select2-container--default .select2-selection--single {
+    background-color: var(--select2js-bg) !important;
+    color: var(--select2js-color) !important;
+    border: 1px solid var(--select2js-border-color) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: var(--select2js-color) !important;
+}
+
+.select2-container--default .select2-results__option {
+    background-color: var(--select2js-bg) !important;
+    color: var(--select2js-color) !important;
+}
+
+.select2-container--default .select2-results__option--highlighted {
+    background-color: var(--select2js-border-color) !important;
+    color: var(--select2js-color) !important;
+}

@@ -12,7 +12,8 @@
                         <ul class="nav nav-underline nav-justified gap-0">
                             <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab"
                                     data-bs-target="#system-activities-activities" type="button" role="tab"
-                                    aria-controls="home" aria-selected="true" href="#system-activities">{{ trans('language.vl_menu_system') }}</a>
+                                    aria-controls="home" aria-selected="true"
+                                    href="#system-activities">{{ trans('language.vl_menu_system') }}</a>
                             </li>
                             <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#x-activities"
                                     type="button" role="tab" aria-controls="home" aria-selected="true"
@@ -33,12 +34,16 @@
                                         <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab"
                                                 data-bs-target="#maintenance-activities" type="button" role="tab"
                                                 aria-controls="home" aria-selected="true"
-                                                href="#maintenance-activities">Maintenance</a>
+                                                href="#maintenance-activities">{!! app()->isDownForMaintenance()
+                                                    ? "<i class='mdi mdi-run-fast text-green-600'></i> Maintenance"
+                                                    : "<i class='mdi mdi-bed text-danger'></i> Maintenance" !!}</a>
                                         </li>
                                         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
                                                 data-bs-target="#debug-activities" type="button" role="tab"
                                                 aria-controls="home" aria-selected="false"
-                                                href="#debug-activities">Debug</a>
+                                                href="#debug-activities">{!! config('app.debug')
+                                                    ? "<i class='mdi mdi-lightbulb-on text-green-600'></i> Debug"
+                                                    : "<i class='mdi mdi-lightbulb-off text-danger'></i> Debug" !!}</a>
                                         </li>
 
                                     </ul>
@@ -67,7 +72,7 @@
 
                                                             </td>
                                                         </tr>
-                                                        <tr>
+                                                        {{-- <tr>
                                                             <th scope="row">Excluded URIs</th>
                                                             <td>
                                                                 <div class="mb-3">
@@ -80,12 +85,32 @@
                                                                         /system/settings; /landing; /admin).</small>
                                                                 </div>
                                                             </td>
+                                                        </tr> --}}
+                                                        <tr>
+                                                            <th scope="row">Excluded URIs</th>
+                                                            <td>
+                                                                <div class="mb-3">
+                                                                    <select id="maintenance_excluded_uris"
+                                                                        name="maintenance_excluded_uris[]"
+                                                                        multiple="multiple" style="width: 100%;">
+                                                                        @foreach ($routes as $route)
+                                                                            <option value="{{ $route['uri'] }}"
+                                                                                @if (in_array($route['uri'], $selectedUris)) selected @endif>
+                                                                                {{ $route['uri'] }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    <small class="form-text text-muted">Select one or more
+                                                                        URIs to exclude from maintenance mode.</small>
+                                                                </div>
+                                                            </td>
                                                         </tr>
 
                                                     </tbody>
                                                 </table>
                                                 <div class="d-flex justify-content-center align-content-center mt-2">
-                                                    <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save"></i> Save
+                                                    <button type="submit" class="btn btn-primary"><i
+                                                            class="mdi mdi-content-save"></i> Save
                                                         Settings</button>
                                             </form>
 
@@ -145,8 +170,11 @@
                                                 </tbody>
                                             </table>
                                             <div class="d-flex justify-content-center align-content-center">
-                                                <button type="submit" class="btn btn-success mt-2"><i class="mdi mdi-content-save"></i> Save Settings</button>
+                                                <button type="submit" class="btn btn-success mt-2"><i
+                                                        class="mdi mdi-content-save"></i> Save Settings</button>
                                         </form>
+
+
 
                                     </div>
                                 </div>
@@ -258,6 +286,37 @@
                         alert('An error occurred while toggling debugging.');
                     }
                 });
+            });
+        });
+    </script>
+
+
+
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2 for Excluded URIs
+            $('#maintenance_excluded_uris').select2({
+                placeholder: "Select one or more URIs", // Placeholder text
+                allowClear: true, // Allow clearing the selection
+                closeOnSelect: false, // Keep dropdown open after selecting
+            });
+
+            // Disable selected options dynamically
+            $('#route-select').on('change', function() {
+                const selectedOptions = $(this).val(); // Get currently selected values
+
+                // Loop through all options and disable/enable based on selection
+                $('#route-select option').each(function() {
+                    const optionValue = $(this).val();
+                    if (selectedOptions && selectedOptions.includes(optionValue)) {
+                        $(this).prop('disabled', true); // Disable selected options
+                    } else {
+                        $(this).prop('disabled', false); // Enable unselected options
+                    }
+                });
+
+                // Refresh Select2 to reflect changes
+                $('#route-select').trigger('change.select2');
             });
         });
     </script>

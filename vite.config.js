@@ -11,6 +11,9 @@ export default defineConfig({
             },
         }),
     ],
+    server: {
+        cors: true,      // Enable CORS for all origins
+    },
 });
 
 

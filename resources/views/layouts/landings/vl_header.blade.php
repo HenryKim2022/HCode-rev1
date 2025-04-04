@@ -12,25 +12,32 @@
     <link rel="shortcut icon" href="{{ asset('template/assets/images/favicon.ico') }}?v={{ time() }}">
 
     <!-- Daterangepicker css -->
-    <link rel="stylesheet" href="{{ asset('template/assets/vendor/daterangepicker/daterangepicker.css') }}?v={{ time() }}">
+    <link rel="stylesheet"
+        href="{{ asset('template/assets/vendor/daterangepicker/daterangepicker.css') }}?v={{ time() }}">
 
     <!-- Vector Map css -->
-    <link rel="stylesheet" href="{{ asset('template/assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}?v={{ time() }}">
+    <link rel="stylesheet"
+        href="{{ asset('template/assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}?v={{ time() }}">
 
     <!-- Theme Config Js -->
     <script src="{{ asset('template/assets/js/config.js') }}?v={{ time() }}"></script>
 
     <!-- App css -->
-    <link href="{{ asset('template/assets/css/app.min.css') }}?v={{ time() }}" rel="stylesheet" type="text/css" id="app-style" />
+    <link href="{{ asset('template/assets/css/app.min.css') }}?v={{ time() }}" rel="stylesheet" type="text/css"
+        id="app-style" />
 
     <!-- Icons css -->
-    <link href="{{ asset('template/assets/css/icons.min.css') }}?v={{ time() }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('template/assets/css/icons.min.css') }}?v={{ time() }}" rel="stylesheet"
+        type="text/css" />
 
     <!-- Photoswipe css -->
     <link rel="stylesheet" href="{{ asset('css/photoswipe.css') }}">
 
     {{-- <link href="{{ asset('resources/css/bundle/gen_cssbudle.css') }}?v={{ time() }}" rel="stylesheet" type="text/css" /> --}}
 
+
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 
 

@@ -26,11 +26,11 @@ class PreventRequestsDuringMaintenance extends \Illuminate\Foundation\Http\Middl
      */
     public function __construct(Application $app)
     {
-        parent::__construct($app); // Call the parent constructor
+        parent::__construct($app);
 
         // Default URI exclusions
         $default_excluded_uris = [
-            'reset.php',
+            '/reset', // Add leading slash
             'lang/*',
             '/system/settings',
             '/system/update-maintenance-exclusion',
@@ -41,21 +41,13 @@ class PreventRequestsDuringMaintenance extends \Illuminate\Foundation\Http\Middl
         // Retrieve excluded URIs from settings and split by semicolons
         $urls_allowed = collect(Setting::get('maintenance_excluded_uris', ''))
             ->flatMap(function ($uri) {
-                return array_map('trim', explode(';', $uri)); // Split by semicolon and trim each value
+                return array_map('trim', explode(';', $uri));
             })
-            ->filter() // Remove empty values
+            ->filter()
             ->toArray();
 
         // Merge default exclusions with user-defined exclusions
         $urls_allowed = array_merge($default_excluded_uris, $urls_allowed);
-
-        // Retrieve excluded IPs from settings and split by semicolons
-        $ips_allowed = collect(Setting::get('maintenance_excluded_ips', ''))
-            ->flatMap(function ($ip) {
-                return array_map('trim', explode(';', $ip)); // Split by semicolon and trim each value
-            })
-            ->filter() // Remove empty values
-            ->toArray();
 
         // Automatically exclude backend prefix (if configured in config file)
         if (config('mycustomconfig.backend_prefix')) {
@@ -66,7 +58,12 @@ class PreventRequestsDuringMaintenance extends \Illuminate\Foundation\Http\Middl
         $this->except = array_merge($this->except, $urls_allowed);
 
         // Store excluded IPs in a separate property
-        $this->excluded_ips = $ips_allowed;
+        $this->excluded_ips = collect(Setting::get('maintenance_excluded_ips', ''))
+            ->flatMap(function ($ip) {
+                return array_map('trim', explode(';', $ip));
+            })
+            ->filter()
+            ->toArray();
 
         // Log exclusions for debugging
         Log::info('Maintenance Mode Exclusions', [

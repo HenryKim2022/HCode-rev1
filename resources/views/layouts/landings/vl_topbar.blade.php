@@ -8,8 +8,7 @@
                 <!-- Logo light -->
                 <a href="{{ route('root') }}" class="logo-light">
                     <span class="logo-lg">
-                        <img src="{{ asset('template/assets/images/logo.png') }}?v={{ time() }}"
-                            alt="logo">
+                        <img src="{{ asset('template/assets/images/logo.png') }}?v={{ time() }}" alt="logo">
                     </span>
                     <span class="logo-sm">
                         <img src="{{ asset('template/assets/images/logo-sm.png') }}?v={{ time() }}"
@@ -48,7 +47,8 @@
             <div class="app-search d-none d-lg-block">
                 <form>
                     <div class="input-group">
-                        <input type="search" class="form-control" placeholder="{{ trans('language.vl_menu_search') }}...">
+                        <input type="search" class="form-control"
+                            placeholder="{{ trans('language.vl_menu_search') }}...">
                         <span class="ri-search-line search-icon text-muted"></span>
                     </div>
                 </form>
@@ -63,8 +63,8 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0">
                     <form class="p-3">
-                        <input type="search" class="form-control" placeholder="{{ trans('language.vl_menu_search') }}..."
-                            aria-label="Recipient's username">
+                        <input type="search" class="form-control"
+                            placeholder="{{ trans('language.vl_menu_search') }}..." aria-label="Recipient's username">
                     </form>
                 </div>
             </li>
@@ -342,55 +342,82 @@
                 </div>
             </li>
 
-            <li class="dropdown">
-                <a class="nav-link dropdown-toggle arrow-none nav-user" data-bs-toggle="dropdown" href="#"
-                    role="button" aria-haspopup="false" aria-expanded="false">
-                    <span class="account-user-avatar">
-                        <img src="{{ asset('template/assets/images/users/avatar-1.jpg') }}?v={{ time() }}"
-                            alt="user-image" width="32" class="rounded-circle">
-                    </span>
-                    <span class="d-lg-block d-none">
-                        <h5 class="my-0 fw-normal">Thomson <i
-                                class="ri-arrow-down-s-line d-none d-sm-inline-block align-middle"></i></h5>
-                    </span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
-                    <!-- item-->
-                    <div class=" dropdown-header noti-title">
-                        <h6 class="text-overflow m-0">Welcome !</h6>
+            @guest
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle arrow-none nav-user" data-bs-toggle="dropdown" href="#"
+                        role="button" aria-haspopup="false" aria-expanded="false">
+                        <span class="account-user-avatar">
+                            <i class="mdi mdi-account-circle fs-2"></i>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
+                        <!-- item-->
+                        <a href="{{ route('login') }}" class="dropdown-item">
+                            <i class="mdi mdi-login fs-18 align-middle me-1"></i>
+                            <span>Login</span>
+                        </a>
+                        <!-- item-->
+                        <a href="{{ route('register') }}" class="dropdown-item">
+                            <i class="mdi mdi-account fs-18 align-middle me-1"></i>
+                            <span>Register</span>
+                        </a>
+
                     </div>
+                </li>
+            @endguest
 
-                    <!-- item-->
-                    <a href="pages-profile.html" class="dropdown-item">
-                        <i class="ri-account-circle-line fs-18 align-middle me-1"></i>
-                        <span>My Account</span>
+            @auth
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle arrow-none nav-user" data-bs-toggle="dropdown" href="#"
+                        role="button" aria-haspopup="false" aria-expanded="false">
+                        <span class="account-user-avatar">
+                            <img src="{{ asset('template/assets/images/users/avatar-1.jpg') }}?v={{ time() }}"
+                                alt="user-image" width="32" class="rounded-circle">
+                        </span>
+                        <span class="d-lg-block d-none">
+                            <h5 class="my-0 fw-normal">{{ getAccountByEmail(auth()->user()->email)['name'] }} <i
+                                    class="ri-arrow-down-s-line d-none d-sm-inline-block align-middle"></i></h5>
+                        </span>
                     </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
+                        <!-- item-->
+                        <div class=" dropdown-header noti-title">
+                            <h6 class="text-overflow m-0">Welcome !</h6>
+                        </div>
 
-                    <!-- item-->
-                    <a href="pages-profile.html" class="dropdown-item">
-                        <i class="ri-settings-4-line fs-18 align-middle me-1"></i>
-                        <span>Settings</span>
-                    </a>
+                        <!-- item-->
+                        <a href="pages-profile.html" class="dropdown-item">
+                            <i class="ri-account-circle-line fs-18 align-middle me-1"></i>
+                            <span>My Account</span>
+                        </a>
 
-                    <!-- item-->
-                    <a href="pages-faq.html" class="dropdown-item">
-                        <i class="ri-customer-service-2-line fs-18 align-middle me-1"></i>
-                        <span>Support</span>
-                    </a>
+                        <!-- item-->
+                        <a href="pages-profile.html" class="dropdown-item">
+                            <i class="ri-settings-4-line fs-18 align-middle me-1"></i>
+                            <span>Settings</span>
+                        </a>
 
-                    <!-- item-->
-                    <a href="auth-lock-screen.html" class="dropdown-item">
-                        <i class="ri-lock-password-line fs-18 align-middle me-1"></i>
-                        <span>Lock Screen</span>
-                    </a>
+                        <!-- item-->
+                        <a href="pages-faq.html" class="dropdown-item">
+                            <i class="ri-customer-service-2-line fs-18 align-middle me-1"></i>
+                            <span>Support</span>
+                        </a>
 
-                    <!-- item-->
-                    <a href="auth-logout-2.html" class="dropdown-item">
-                        <i class="ri-logout-box-line fs-18 align-middle me-1"></i>
-                        <span>Logout</span>
-                    </a>
-                </div>
-            </li>
+                        <!-- item-->
+                        <a href="auth-lock-screen.html" class="dropdown-item">
+                            <i class="ri-lock-password-line fs-18 align-middle me-1"></i>
+                            <span>Lock Screen</span>
+                        </a>
+
+                        <!-- item-->
+                        <a href="auth-logout-2.html" class="dropdown-item">
+                            <i class="ri-logout-box-line fs-18 align-middle me-1"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </li>
+            @endauth
+
         </ul>
     </div>
 </div>

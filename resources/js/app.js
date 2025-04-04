@@ -1,16 +1,14 @@
+// import $ from 'jquery';
 import './bootstrap';
 
 // Import PhotoSwipe CSS
 import 'photoswipe/dist/photoswipe.css';
-// Import PhotoSwipe core
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 import PhotoSwipe from 'photoswipe';
 
 
 import Alpine from 'alpinejs';
-
 window.Alpine = Alpine;
-
 Alpine.start();
 
 
@@ -203,6 +201,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
     // ENDOF: CLOSE BUTTONS FOR ALL MODALS
+
+
+
+
+
 
 });
 
