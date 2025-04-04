@@ -61,15 +61,19 @@
                                                             <th scope="row">Excluded IPs</th>
                                                             <td>
                                                                 <div class="mb-3">
-                                                                    <input type="text" class="form-control"
-                                                                        id="maintenance_excluded_ips"
-                                                                        name="maintenance_excluded_ips"
-                                                                        value="{{ $excludedIps }}">
-                                                                    <small class="form-text text-muted">Semicolon-separated
-                                                                        list of IP addresses
-                                                                        (e.g., 192.168.1.19; 192.168.1.2)</small>
+                                                                    <select id="maintenance_excluded_ips"
+                                                                        name="maintenance_excluded_ips[]"
+                                                                        multiple="multiple" style="width: 100%;">
+                                                                        @foreach (explode(';', $excludedIps) as $ip)
+                                                                            @if (!empty(trim($ip)))
+                                                                                <option value="{{ trim($ip) }}"
+                                                                                    selected>{{ trim($ip) }}</option>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </select>
+                                                                    <small class="form-text text-muted">Select one or more
+                                                                        IPs to exclude from maintenance mode.</small>
                                                                 </div>
-
                                                             </td>
                                                         </tr>
 
@@ -77,17 +81,6 @@
                                                             <th scope="row">Excluded URIs</th>
                                                             <td>
                                                                 <div class="mb-3">
-                                                                    {{-- <select id="maintenance_excluded_uris"
-                                                                        name="maintenance_excluded_uris[]"
-                                                                        multiple="multiple" style="width: 100%;">
-                                                                        @foreach ($routes as $route)
-                                                                            <option value="{{ $route['uri'] }}"
-                                                                                @if (in_array($route['uri'], $selectedUris)) selected @endif>
-                                                                                {{ $route['uri'] }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select> --}}
-
                                                                     <select id="maintenance_excluded_uris"
                                                                         name="maintenance_excluded_uris[]"
                                                                         multiple="multiple" style="width: 100%;">
@@ -206,13 +199,9 @@
 @section('footer_page_js')
     <script>
         $(document).ready(function() {
-            // Retrieve the CSRF token using Laravel's helper
-            // const csrfToken = "{{ csrf_token() }}";
-
             // Handle Maintenance Mode Toggle Form Submission
             $('#maintenance-form').on('submit', function(e) {
                 e.preventDefault(); // Prevent default form submission
-
                 $.ajax({
                     url: $(this).attr('action'),
                     type: 'POST',
@@ -235,7 +224,6 @@
             // Handle Maintenance Exclusions Update Form Submission
             $('#exclusion-form').on('submit', function(e) {
                 e.preventDefault(); // Prevent default form submission
-
                 $.ajax({
                     url: $(this).attr('action'),
                     type: 'POST',
@@ -267,7 +255,6 @@
             // Handle Debugging Toggle Form Submission
             $('#debug-form').on('submit', function(e) {
                 e.preventDefault(); // Prevent default form submission
-
                 $.ajax({
                     url: $(this).attr('action'),
                     type: 'POST',
@@ -291,6 +278,89 @@
 
 
 
+
+
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2 for Excluded IPs
+            $('#maintenance_excluded_ips').select2({
+                placeholder: "Select one or more IPs", // Placeholder text
+                allowClear: false, // Allow clearing the selection
+                closeOnSelect: false, // Keep dropdown open after selecting
+                tags: true, // Enable adding new options by typing
+                createTag: function(params) {
+                    const term = params.term.trim();
+                    if (!term) {
+                        return null; // Prevent empty tags
+                    }
+                    // Validate the input (e.g., ensure it matches an IP pattern)
+                    const ipPattern = /^([0-9]{1,3}\.){3}[0-9]{1,3}$/;
+                    if (!ipPattern.test(term)) {
+                        return null; // Prevent invalid tags
+                    }
+                    // Check for duplicates
+                    const isDuplicate = $('#maintenance_excluded_ips option').filter(function() {
+                        return $(this).text().toLowerCase() === term.toLowerCase();
+                    }).length > 0;
+                    if (isDuplicate) {
+                        return null; // Prevent duplicate tags
+                    }
+                    // Create the new tag
+                    return {
+                        id: term, // Use the input as the ID
+                        text: term, // Use the input as the display text
+                    };
+                },
+            });
+
+            // Handle new IP addition via AJAX
+            $('#maintenance_excluded_ips').on('select2:select', function(e) {
+                const selectedOption = e.params.data;
+                // Normalize the selected option's ID for comparison
+                const normalizedSelectedId = selectedOption.id.trim().toLowerCase();
+                // Check if the option is new (not part of the original list)
+                const isDuplicate = $('#maintenance_excluded_ips option').filter(function() {
+                    return $(this).val().trim().toLowerCase() === normalizedSelectedId;
+                }).length > 0;
+
+                if (!isDuplicate) {
+                    console.log('New IP added:', selectedOption.id);
+                    // Send the new IP to the server
+                    $.ajax({
+                        url: "{{ route('syssettings.savetyped.ip') }}", // Replace with your API endpoint
+                        method: 'POST',
+                        data: {
+                            newIp: selectedOption.id
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            console.log('New IP saved:', response);
+                            // Ensure newOption is properly defined
+                            const newOption = new Option(selectedOption.text, selectedOption.id,
+                                true, true);
+                            // Append the new option to the dropdown
+                            $('#maintenance_excluded_ips').append(newOption).trigger('change');
+                            // Disable the newly added option
+                            $(newOption).prop('disabled', true);
+                            // Refresh Select2 to reflect changes
+                            $('#maintenance_excluded_ips').trigger('change.select2');
+                        },
+                        error: function(error) {
+                            console.error('Error saving new IP:', error);
+                        },
+                    });
+                } else {
+                    console.log('IP already exists');
+                }
+            });
+        });
+    </script>
+
+
+
+
     <script>
         $(document).ready(function() {
             // Initialize Select2 for Excluded URIs
@@ -304,7 +374,6 @@
                     if (!term) {
                         return null; // Prevent empty tags
                     }
-
                     // Validate the input (e.g., ensure it matches a URI pattern)
                     const uriPattern = /^[a-zA-Z0-9\-_\/]+$/;
                     if (!uriPattern.test(term)) {
@@ -329,21 +398,17 @@
 
             $('#maintenance_excluded_uris').on('select2:select', function(e) {
                 const selectedOption = e.params.data;
-
                 // Normalize the selected option's ID for comparison
                 const normalizedSelectedId = selectedOption.id.trim().toLowerCase();
-
                 // Check if the option is new (not part of the original list)
                 const isDuplicate = $('#maintenance_excluded_uris option').filter(function() {
                     return $(this).val().trim().toLowerCase() === normalizedSelectedId;
                 }).length > 0;
-
                 if (!isDuplicate) {
                     console.log('New option added:', selectedOption.id);
-
                     // Send the new option to the server
                     $.ajax({
-                        url: '/system/save-typed-uri', // Replace with your API endpoint
+                        url: "{{ route('syssettings.savetyped.uri') }}", // Replace with your API endpoint
                         method: 'POST',
                         data: {
                             newUri: selectedOption.id
@@ -353,17 +418,13 @@
                         },
                         success: function(response) {
                             console.log('New URI saved:', response);
-
                             // Ensure newOption is properly defined
                             const newOption = new Option(selectedOption.text, selectedOption.id,
                                 true, true);
-
                             // Append the new option to the dropdown
                             $('#maintenance_excluded_uris').append(newOption).trigger('change');
-
                             // Disable the newly added option
                             $(newOption).prop('disabled', true);
-
                             // Refresh Select2 to reflect changes
                             $('#maintenance_excluded_uris').trigger('change.select2');
                         },
@@ -371,7 +432,7 @@
                             console.error('Error saving new URI:', error);
                         },
                     });
-                }else{
+                } else {
                     console.log('Option already exists');
                 }
 

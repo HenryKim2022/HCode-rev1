@@ -16,46 +16,6 @@ class SystemController extends Controller
     /**
      * Display the system settings page.
      */
-
-    // public function index($message = null)
-    // {
-    //     // Retrieve all routes and map them to their URIs
-    //     $routes = collect(Route::getRoutes())->map(function ($route) {
-    //         return [
-    //             'uri' => $route->uri(),
-    //         ];
-    //     })->filter(function ($route) {
-    //         // Exclude internal/default routes
-    //         $excludedPrefixes = ['/', '_debugbar', 'telescope', 'horizon', 'sanctum/csrf-cookie', '_ignition'];
-    //         foreach ($excludedPrefixes as $prefix) {
-    //             if (Str::startsWith($route['uri'], $prefix)) {
-    //                 return false; // Exclude routes that match any prefix
-    //             }
-    //         }
-    //         return true; // Include all other routes
-    //     })->unique('uri') // Ensure only unique URIs are included
-    //         ->values(); // Reset keys for easier handling
-
-    //     // Retrieve currently excluded URIs from settings
-    //     $selectedUris = collect(Setting::get('maintenance_excluded_uris', ''))
-    //         ->flatMap(function ($uri) {
-    //             return array_map('trim', explode(';', $uri));
-    //         })
-    //         ->filter()
-    //         ->toArray();
-
-    //     $pageData = [
-    //         'excludedIps' => Setting::get('maintenance_excluded_ips', ''),
-    //         'selectedUris' => $selectedUris,
-    //         'messages' => [$message],
-    //         'routes' => $routes,
-    //     ];
-
-    //     return view('pages.userpanels.vp_syssettings', $pageData);
-    // }
-
-
-
     public function index($message = null)
     {
         // Retrieve all routes and map them to their URIs
@@ -74,7 +34,6 @@ class SystemController extends Controller
             return true; // Include all other routes
         })->unique('uri') // Ensure only unique URIs are included
             ->values(); // Reset keys for easier handling
-
         // Retrieve currently excluded URIs from settings
         $selectedUris = collect(Setting::get('maintenance_excluded_uris', ''))
             ->flatMap(function ($uri) {
@@ -82,23 +41,19 @@ class SystemController extends Controller
             })
             ->filter()
             ->toArray();
-
         // Combine routes and selected URIs into a single collection
         $allUris = collect($routes)->pluck('uri')
             ->merge($selectedUris)
             ->unique() // Ensure uniqueness
             ->values(); // Reset keys for easier handling
-
         $pageData = [
             'excludedIps' => Setting::get('maintenance_excluded_ips', ''),
             'selectedUris' => $selectedUris,
             'messages' => [$message],
             'routes' => $allUris, // Pass the combined URIs to the view
         ];
-
         return view('pages.userpanels.vp_syssettings', $pageData);
     }
-
 
 
     /**
@@ -110,16 +65,7 @@ class SystemController extends Controller
         $validated = $request->validate([
             'maintenance_excluded_ips' => [
                 'nullable',
-                'string',
-                'regex:/^([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}(;[ ]*[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})*[ ]*)?$/',
-                function ($attribute, $value, $fail) {
-                    $ips = explode(';', $value);
-                    foreach ($ips as $ip) {
-                        if (!filter_var(trim($ip), FILTER_VALIDATE_IP)) {
-                            $fail("The {$attribute} field contains an invalid IP address: '{$ip}'.");
-                        }
-                    }
-                },
+                'array',
             ],
             'maintenance_excluded_uris' => [
                 'nullable',
@@ -127,17 +73,20 @@ class SystemController extends Controller
             ],
         ]);
 
+        // Convert the selected IPs array to a semicolon-separated string
+        $selectedIps = implode(';', $request->input('maintenance_excluded_ips', []));
+
         // Convert the selected URIs array to a semicolon-separated string
         $selectedUris = implode(';', $request->input('maintenance_excluded_uris', []));
 
         // Save the new settings
-        Setting::set('maintenance_excluded_ips', $request->input('maintenance_excluded_ips'));
+        Setting::set('maintenance_excluded_ips', $selectedIps);
         Setting::set('maintenance_excluded_uris', $selectedUris);
         Setting::save();
 
         // Log the update
         Log::info('Maintenance exclusions updated.', [
-            'excluded_ips' => $request->input('maintenance_excluded_ips'),
+            'excluded_ips' => $selectedIps,
             'excluded_uris' => $selectedUris,
         ]);
 
@@ -146,77 +95,46 @@ class SystemController extends Controller
     }
 
 
-    /**
-     * Toggle maintenance mode.
-     */
-    public function toggleMaintenance()
-    {
-        $isDown = app()->isDownForMaintenance();
-        if ($isDown) {
-            Artisan::call('up'); // Bring the app back online
-        } else {
-            Artisan::call('down'); // Put the app in maintenance mode
-        }
 
-        // Log the toggle action
-        Log::info('Maintenance mode toggled.', ['status' => $isDown ? 'online' : 'offline']);
-
-        // Return a JSON response
-        return $this->jsonResponse(
-            true,
-            $isDown ? 'Application is now online.' : 'Application is now in maintenance mode.',
-            url()->previous()
-        );
-    }
 
     /**
-     * Toggle debugging mode by updating APP_DEBUG in .env.
+     * Save a new IP option to the backend.
      */
-    public function toggleDebug()
+    public function saveTypedIp(Request $request)
     {
-        // Get the new debug value from the request
-        $newDebugValue = request('app_debug') === 'true' ? 'true' : 'false';
+        $validated = $request->validate([
+            'newIp' => [
+                'required',
+                'string',
+                'regex:/^([0-9]{1,3}\.){3}[0-9]{1,3}$/',
+            ],
+        ]);
 
-        // Update the .env file
-        $this->setEnv('APP_DEBUG', $newDebugValue);
+        $existingIps = collect(Setting::get('maintenance_excluded_ips', ''))
+            ->flatMap(function ($ip) {
+                return array_map('trim', explode(';', $ip));
+            })
+            ->filter()
+            ->toArray();
 
-        // Clear the config cache to apply changes
-        Artisan::call('config:clear');
+        if (in_array($validated['newIp'], $existingIps)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'The IP already exists.',
+            ], 409); // 409 Conflict
+        }
 
-        // Log the toggle action
-        Log::info('APP_DEBUG updated.', ['APP_DEBUG' => $newDebugValue]);
+        $updatedIps = implode(';', array_merge($existingIps, [$validated['newIp']]));
+        Setting::set('maintenance_excluded_ips', $updatedIps);
+        Setting::save();
 
-        // Return a JSON response
-        return $this->jsonResponse(
-            true,
-            "APP_DEBUG has been set to $newDebugValue.",
-            route('index.syssettings')
-        );
+        return response()->json([
+            'success' => true,
+            'message' => 'New IP added successfully.',
+        ]);
     }
 
-    /**
-     * Helper method to update the .env file.
-     */
-    private function setEnv($key, $value)
-    {
-        $path = base_path('.env');
 
-        if (!File::exists($path)) {
-            throw new \Exception("The .env file does not exist at path: {$path}");
-        }
-
-        $content = File::get($path);
-
-        if (preg_match("/^{$key}=.*/m", $content)) {
-            $content = preg_replace("/^{$key}=.*/m", "{$key}={$value}", $content);
-        } else {
-            $content .= "\n{$key}={$value}";
-        }
-
-        if (!File::put($path, $content)) {
-            throw new \Exception("Failed to update the .env file at path: {$path}");
-        }
-    }
 
 
     /**
@@ -231,30 +149,93 @@ class SystemController extends Controller
                 'regex:/^[a-zA-Z0-9\-_\/]+$/',
             ],
         ]);
-
         $existingUris = collect(Setting::get('maintenance_excluded_uris', ''))
             ->flatMap(function ($uri) {
                 return array_map('trim', explode(';', $uri));
             })
             ->filter()
             ->toArray();
-
         if (in_array($validated['newUri'], $existingUris)) {
             return response()->json([
                 'success' => false,
                 'message' => 'The URI already exists.',
             ], 409); // 409 Conflict
         }
-
         $updatedUris = implode(';', array_merge($existingUris, [$validated['newUri']]));
         Setting::set('maintenance_excluded_uris', $updatedUris);
         Setting::save();
-
         return response()->json([
             'success' => true,
             'message' => 'New URI added successfully.',
         ]);
     }
+
+
+
+    /**
+     * Toggle maintenance mode.
+     */
+    public function toggleMaintenance()
+    {
+        $isDown = app()->isDownForMaintenance();
+        if ($isDown) {
+            Artisan::call('up'); // Bring the app back online
+        } else {
+            Artisan::call('down'); // Put the app in maintenance mode
+        }
+        // Log the toggle action
+        Log::info('Maintenance mode toggled.', ['status' => $isDown ? 'online' : 'offline']);
+        // Return a JSON response
+        return $this->jsonResponse(
+            true,
+            $isDown ? 'Application is now online.' : 'Application is now in maintenance mode.',
+            url()->previous()
+        );
+    }
+
+
+
+    /**
+     * Toggle debugging mode by updating APP_DEBUG in .env.
+     */
+    public function toggleDebug()
+    {
+        // Get the new debug value from the request
+        $newDebugValue = request('app_debug') === 'true' ? 'true' : 'false';
+        // Update the .env file
+        $this->setEnv('APP_DEBUG', $newDebugValue);
+        // Clear the config cache to apply changes
+        Artisan::call('config:clear');
+        // Log the toggle action
+        Log::info('APP_DEBUG updated.', ['APP_DEBUG' => $newDebugValue]);
+        // Return a JSON response
+        return $this->jsonResponse(
+            true,
+            "APP_DEBUG has been set to $newDebugValue.",
+            route('index.syssettings')
+        );
+    }
+
+    /**
+     * Helper method to update the .env file.
+     */
+    private function setEnv($key, $value)
+    {
+        $path = base_path('.env');
+        if (!File::exists($path)) {
+            throw new \Exception("The .env file does not exist at path: {$path}");
+        }
+        $content = File::get($path);
+        if (preg_match("/^{$key}=.*/m", $content)) {
+            $content = preg_replace("/^{$key}=.*/m", "{$key}={$value}", $content);
+        } else {
+            $content .= "\n{$key}={$value}";
+        }
+        if (!File::put($path, $content)) {
+            throw new \Exception("Failed to update the .env file at path: {$path}");
+        }
+    }
+
 
 
 
