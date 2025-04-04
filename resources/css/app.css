@@ -126,6 +126,8 @@ html[data-bs-theme=dark] {
     --select2js-border-color: #3b4253;
     --select2js-disabled-bg: #f0f0f0;
     --select2js-disabled-color: #a8a8a8;
+    --select2-results__scrollbar-thumb-bg: #2f3742;
+    --select2-results__scrollbar-thumb-bg-hover: #4e5052;
 }
 
 html[data-bs-theme=light] {
@@ -137,7 +139,8 @@ html[data-bs-theme=light] {
     --select2js-border-color: #d8d6de;
     --select2js-disabled-bg: #f0f0f0;
     --select2js-disabled-color: #a8a8a8;
-
+    --select2-results__scrollbar-thumb-bg: #2f3742;
+    --select2-results__scrollbar-thumb-bg-hover: #4e5052;
 }
 
 
@@ -164,13 +167,6 @@ section .posts-tags {
 
 
 
-/* select.form-control, .custom-select {
-    background-color: var(--select2js-bg) !important;
-    color: var(--select2js-color) !important;
-    border-color: var(--select2js-border-color) !important;
-} */
-
-
 
 /* Select2 styling */
 .select2-container--default .select2-selection--single {
@@ -195,18 +191,54 @@ section .posts-tags {
 
 
 
+/* General Select2 Styles */
+.select2-container {
+    background-color: var(--select2js-bg);
+    color: var(--select2js-color);
+    border-color: var(--select2js-border-color);
+}
 
+.select2-container--default .select2-selection--multiple {
+    background-color: var(--select2js-bg);
+    color: var(--select2js-color);
+    border-color: var(--select2js-border-color);
+}
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: var(--select2js-disabled-bg);
+    color: var(--select2js-disabled-color);
+}
+
+.select2-container--default .select2-search--inline .select2-search__field {
     background-color: var(--select2js-bg);
-    border: 1px solid var(--select2js-color);
+    color: var(--select2js-color);
+}
+
+/* Disabled State */
+.select2-container--default.select2-container--disabled .select2-selection--multiple {
+    background-color: var(--select2js-disabled-bg);
+    color: var(--select2js-disabled-color);
 }
 
 
-/* Style for disabled options in Select2 */
-.select2-results__option[aria-disabled="true"] {
-    color: var(--select2js-disabled-color) !important; /* Grayed-out text color */
-    background-color: var(--select2js-disabled-bg) !important; /* Light gray background */
-    cursor: not-allowed !important; /* Change cursor to indicate it's disabled */
+
+/* Style the scrollbar track */
+.select2-results__options::-webkit-scrollbar {
+    -webkit-appearance: none; /* Remove default styling */
+    width: 8px; /* Set the width of the scrollbar */
+    height: 8px; /* Set the height for horizontal scrollbars (optional) */
 }
+
+/* Style the scrollbar thumb */
+.select2-results__options::-webkit-scrollbar-thumb {
+    background-color: var(--select2-results__scrollbar-thumb-bg) !important; /* Set the thumb color */
+    border-radius: 4px; /* Add rounded corners to the thumb */
+    border: 1px solid #fff; /* Optional: Add a border around the thumb */
+}
+
+/* Hover effect for the scrollbar thumb */
+.select2-results__options::-webkit-scrollbar-thumb:hover {
+    background-color: var(--select2-results__scrollbar-thumb-bg-hover) !important; /* Change the thumb color on hover */
+}
+
 
