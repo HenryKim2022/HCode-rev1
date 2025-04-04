@@ -183,13 +183,15 @@ class SystemController extends Controller
         } else {
             Artisan::call('down'); // Put the app in maintenance mode
         }
+
         // Log the toggle action
         Log::info('Maintenance mode toggled.', ['status' => $isDown ? 'online' : 'offline']);
+
         // Return a JSON response
         return $this->jsonResponse(
             true,
             $isDown ? 'Application is now online.' : 'Application is now in maintenance mode.',
-            url()->previous()
+            url()->previous() // Redirect back to the previous page
         );
     }
 
@@ -202,19 +204,24 @@ class SystemController extends Controller
     {
         // Get the new debug value from the request
         $newDebugValue = request('app_debug') === 'true' ? 'true' : 'false';
+
         // Update the .env file
         $this->setEnv('APP_DEBUG', $newDebugValue);
+
         // Clear the config cache to apply changes
         Artisan::call('config:clear');
+
         // Log the toggle action
         Log::info('APP_DEBUG updated.', ['APP_DEBUG' => $newDebugValue]);
+
         // Return a JSON response
         return $this->jsonResponse(
             true,
             "APP_DEBUG has been set to $newDebugValue.",
-            route('index.syssettings')
+            route('index.syssettings') // Redirect back to the settings page
         );
     }
+
 
     /**
      * Helper method to update the .env file.

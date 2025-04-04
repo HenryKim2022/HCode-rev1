@@ -101,9 +101,7 @@
                                                     </tbody>
                                                 </table>
                                                 <div class="d-flex justify-content-center align-content-center mt-2">
-                                                    <button type="submit" class="btn btn-primary"><i
-                                                            class="mdi mdi-content-save"></i> Save
-                                                        Settings</button>
+
                                             </form>
 
                                             <!-- Toggle Maintenance Mode Form -->
@@ -112,8 +110,8 @@
                                                 @csrf
                                                 <button type="submit" class="btn btn-primary ms-2">
                                                     {!! app()->isDownForMaintenance()
-                                                        ? "<i class='mdi mdi-run-fast'></i> Maintenance"
-                                                        : "<i class='mdi mdi-bed'></i> Maintenance" !!}
+                                                        ? "<i class='mdi mdi-run-fast'></i> Bring Online"
+                                                        : "<i class='mdi mdi-bed'></i> Put in Maintenance" !!}
                                                 </button>
                                             </form>
                                         </div>
@@ -162,8 +160,7 @@
                                                 </tbody>
                                             </table>
                                             <div class="d-flex justify-content-center align-content-center">
-                                                <button type="submit" class="btn btn-success mt-2"><i
-                                                        class="mdi mdi-content-save"></i> Save Settings</button>
+
                                         </form>
 
 
@@ -199,89 +196,6 @@
 @section('footer_page_js')
     <script>
         $(document).ready(function() {
-            // Handle Maintenance Mode Toggle Form Submission
-            $('#maintenance-form').on('submit', function(e) {
-                e.preventDefault(); // Prevent default form submission
-                $.ajax({
-                    url: $(this).attr('action'),
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            alert(response.message);
-                            window.location.href = response.redirect;
-                        }
-                    },
-                    error: function(xhr) {
-                        alert('An error occurred while toggling maintenance mode.');
-                    }
-                });
-            });
-
-            // Handle Maintenance Exclusions Update Form Submission
-            $('#exclusion-form').on('submit', function(e) {
-                e.preventDefault(); // Prevent default form submission
-                $.ajax({
-                    url: $(this).attr('action'),
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            alert(response.message);
-                            window.location.href = response.redirect;
-                        }
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 422) {
-                            const errors = xhr.responseJSON.errors;
-                            let errorMessage = '';
-                            for (const key in errors) {
-                                errorMessage += errors[key].join('\n') + '\n';
-                            }
-                            alert(errorMessage);
-                        } else {
-                            alert('An error occurred while updating exclusions.');
-                        }
-                    }
-                });
-            });
-
-            // Handle Debugging Toggle Form Submission
-            $('#debug-form').on('submit', function(e) {
-                e.preventDefault(); // Prevent default form submission
-                $.ajax({
-                    url: $(this).attr('action'),
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            alert(response.message);
-                            window.location.href = response.redirect;
-                        }
-                    },
-                    error: function(xhr) {
-                        alert('An error occurred while toggling debugging.');
-                    }
-                });
-            });
-        });
-    </script>
-
-
-
-
-
-    <script>
-        $(document).ready(function() {
             // Initialize Select2 for Excluded IPs
             $('#maintenance_excluded_ips').select2({
                 placeholder: "Select one or more IPs", // Placeholder text
@@ -313,56 +227,7 @@
                 },
             });
 
-            // Handle new IP addition via AJAX
-            $('#maintenance_excluded_ips').on('select2:select', function(e) {
-                const selectedOption = e.params.data;
-                // Normalize the selected option's ID for comparison
-                const normalizedSelectedId = selectedOption.id.trim().toLowerCase();
-                // Check if the option is new (not part of the original list)
-                const isDuplicate = $('#maintenance_excluded_ips option').filter(function() {
-                    return $(this).val().trim().toLowerCase() === normalizedSelectedId;
-                }).length > 0;
 
-                if (!isDuplicate) {
-                    console.log('New IP added:', selectedOption.id);
-                    // Send the new IP to the server
-                    $.ajax({
-                        url: "{{ route('syssettings.savetyped.ip') }}", // Replace with your API endpoint
-                        method: 'POST',
-                        data: {
-                            newIp: selectedOption.id
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                        },
-                        success: function(response) {
-                            console.log('New IP saved:', response);
-                            // Ensure newOption is properly defined
-                            const newOption = new Option(selectedOption.text, selectedOption.id,
-                                true, true);
-                            // Append the new option to the dropdown
-                            $('#maintenance_excluded_ips').append(newOption).trigger('change');
-                            // Disable the newly added option
-                            $(newOption).prop('disabled', true);
-                            // Refresh Select2 to reflect changes
-                            $('#maintenance_excluded_ips').trigger('change.select2');
-                        },
-                        error: function(error) {
-                            console.error('Error saving new IP:', error);
-                        },
-                    });
-                } else {
-                    console.log('IP already exists');
-                }
-            });
-        });
-    </script>
-
-
-
-
-    <script>
-        $(document).ready(function() {
             // Initialize Select2 for Excluded URIs
             $('#maintenance_excluded_uris').select2({
                 placeholder: "Select one or more URIs", // Placeholder text
@@ -395,49 +260,121 @@
             });
 
 
+            // Handle saving for Excluded IPs
+            $('#maintenance_excluded_ips').on('select2:select select2:unselect', function(e) {
+                const selectedOptions = $('#maintenance_excluded_ips').val() || [];
+                console.log('Updated IPs:', selectedOptions);
 
-            $('#maintenance_excluded_uris').on('select2:select', function(e) {
-                const selectedOption = e.params.data;
-                // Normalize the selected option's ID for comparison
-                const normalizedSelectedId = selectedOption.id.trim().toLowerCase();
-                // Check if the option is new (not part of the original list)
-                const isDuplicate = $('#maintenance_excluded_uris option').filter(function() {
-                    return $(this).val().trim().toLowerCase() === normalizedSelectedId;
-                }).length > 0;
-                if (!isDuplicate) {
-                    console.log('New option added:', selectedOption.id);
-                    // Send the new option to the server
-                    $.ajax({
-                        url: "{{ route('syssettings.savetyped.uri') }}", // Replace with your API endpoint
-                        method: 'POST',
-                        data: {
-                            newUri: selectedOption.id
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                        },
-                        success: function(response) {
-                            console.log('New URI saved:', response);
-                            // Ensure newOption is properly defined
-                            const newOption = new Option(selectedOption.text, selectedOption.id,
-                                true, true);
-                            // Append the new option to the dropdown
-                            $('#maintenance_excluded_uris').append(newOption).trigger('change');
-                            // Disable the newly added option
-                            $(newOption).prop('disabled', true);
-                            // Refresh Select2 to reflect changes
-                            $('#maintenance_excluded_uris').trigger('change.select2');
-                        },
-                        error: function(error) {
-                            console.error('Error saving new URI:', error);
-                        },
-                    });
-                } else {
-                    console.log('Option already exists');
-                }
-
-
+                // Send the updated list of IPs to the server
+                $.ajax({
+                    url: "{{ route('syssettings.exclusionupdate') }}",
+                    method: 'POST',
+                    data: {
+                        maintenance_excluded_ips: selectedOptions,
+                        maintenance_excluded_uris: $('#maintenance_excluded_uris').val() || [],
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            console.log('IPs saved successfully:', response);
+                        } else {
+                            alert('An error occurred while saving IPs.');
+                        }
+                    },
+                    error: function(error) {
+                        console.error('Error saving IPs:', error);
+                        alert('An error occurred while saving IPs.');
+                    },
+                });
             });
+
+
+            // Handle saving for Excluded URIs
+            $('#maintenance_excluded_uris').on('select2:select select2:unselect', function(e) {
+                const selectedOptions = $('#maintenance_excluded_uris').val() || [];
+                console.log('Updated URIs:', selectedOptions);
+
+                // Send the updated list of URIs to the server
+                $.ajax({
+                    url: "{{ route('syssettings.exclusionupdate') }}",
+                    method: 'POST',
+                    data: {
+                        maintenance_excluded_ips: $('#maintenance_excluded_ips').val() || [],
+                        maintenance_excluded_uris: selectedOptions,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            console.log('URIs saved successfully:', response);
+                        } else {
+                            alert('An error occurred while saving URIs.');
+                        }
+                    },
+                    error: function(error) {
+                        console.error('Error saving URIs:', error);
+                        alert('An error occurred while saving URIs.');
+                    },
+                });
+            });
+
+
+            // Handle Debugging Toggle on Radio Button Change
+            $('input[name="app_debug"]').on('change', function() {
+                const newDebugValue = $(this).val(); // Get the selected value (true/false)
+                console.log('Debugging toggled to:', newDebugValue);
+
+                // Send the new debug value to the server
+                $.ajax({
+                    url: "{{ route('syssettings.toggledebug') }}",
+                    method: 'POST',
+                    data: {
+                        app_debug: newDebugValue,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message);
+                            window.location.href = response
+                                .redirect; // Reload the page to reflect changes
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred while toggling debugging.');
+                    },
+                });
+            });
+
+
+            // Handle Maintenance Mode Toggle Form Submission via AJAX
+            $('#maintenance-form').on('submit', function(e) {
+                e.preventDefault(); // Prevent default form submission
+
+                $.ajax({
+                    url: $(this).attr('action'), // Use the form's action URL
+                    method: 'POST',
+                    data: $(this).serialize(), // Serialize the form data
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}" // Include CSRF token
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message); // Show success message
+                            window.location.href = response
+                            .redirect; // Redirect to the specified URL
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred while toggling maintenance mode.');
+                    },
+                });
+            });
+
         });
     </script>
 @endsection
