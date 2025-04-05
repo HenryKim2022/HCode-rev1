@@ -49,6 +49,7 @@ class SystemController extends Controller
         $pageData = [
             'excludedIps' => Setting::get('maintenance_excluded_ips', ''),
             'selectedUris' => $selectedUris,
+            // 'laravelLogs' => $this->fetchLogs(),
             'messages' => [$message],
             'routes' => $allUris, // Pass the combined URIs to the view
         ];
@@ -85,10 +86,12 @@ class SystemController extends Controller
         Setting::save();
 
         // Log the update
-        Log::info('Maintenance exclusions updated.', [
-            'excluded_ips' => $selectedIps,
-            'excluded_uris' => $selectedUris,
-        ]);
+        if (config('app.logging_enabled')) {
+            Log::info('Maintenance exclusions updated.', [
+                'excluded_ips' => $selectedIps,
+                'excluded_uris' => $selectedUris,
+            ]);
+        }
 
         // Return a JSON response
         return $this->jsonResponse(true, "Settings updated successfully.", route('index.syssettings'));
@@ -185,7 +188,9 @@ class SystemController extends Controller
         }
 
         // Log the toggle action
-        Log::info('Maintenance mode toggled.', ['status' => $isDown ? 'online' : 'offline']);
+        if (config('app.logging_enabled')) {
+            Log::info('Maintenance mode toggled.', ['status' => $isDown ? 'online' : 'offline']);
+        }
 
         // Return a JSON response
         return $this->jsonResponse(
@@ -212,7 +217,9 @@ class SystemController extends Controller
         Artisan::call('config:clear');
 
         // Log the toggle action
-        Log::info('APP_DEBUG updated.', ['APP_DEBUG' => $newDebugValue]);
+        if (config('app.logging_enabled')) {
+            Log::info('APP_DEBUG updated.', ['APP_DEBUG' => $newDebugValue]);
+        }
 
         // Return a JSON response
         return $this->jsonResponse(
@@ -220,6 +227,126 @@ class SystemController extends Controller
             "APP_DEBUG has been set to $newDebugValue.",
             route('index.syssettings') // Redirect back to the settings page
         );
+    }
+
+
+
+
+    /**
+     * Toggle logging mode by updating APP_DEBUG in .env.
+     */
+    public function toggleLogging()
+    {
+        // Get the new debug value from the request
+        $newLoggingValue = request('app_logging') === 'true' ? 'true' : 'false';
+
+        // Update the .env file
+        $this->setEnv('LOGGING_ENABLED', $newLoggingValue);
+
+        // Clear the config cache to apply changes
+        Artisan::call('config:clear');
+
+        // Log the toggle action
+        if (config('app.logging_enabled')) {
+            Log::info('LOGGING_ENABLED updated.', ['LOGGING_ENABLED' => $newLoggingValue]);
+        }
+
+        // Return a JSON response
+        return $this->jsonResponse(
+            true,
+            "LOGGING_ENABLED has been set to $newLoggingValue.",
+            route('index.syssettings') // Redirect back to the settings page
+        );
+    }
+
+
+    /**
+     * Fetch and display logs.
+     */
+    public function fetchLogs()
+    {
+        // Path to the logs directory
+        $logPath = storage_path('logs');
+
+        // Get all log files (sorted by modification time, newest first)
+        $logFiles = collect(File::glob($logPath . '/*.log'))
+            ->sortByDesc(fn($file) => File::lastModified($file));
+
+        // Read the latest log file(s)
+        $logs = [];
+        foreach ($logFiles as $file) {
+            $fileName = basename($file);
+            $logs[$fileName] = $this->parseLogFile($file);
+        }
+
+        return $logs;
+    }
+
+    /**
+     * Helper method to parse a log file.
+     */
+    private function parseLogFile($filePath)
+    {
+        $content = File::get($filePath);
+        $lines = explode(PHP_EOL, $content);
+        $lines = array_slice($lines, -50);
+
+        $parsedLogs = [];
+        foreach ($lines as $line) {
+            if (preg_match('/^\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\]/', $line)) {
+                $parsedLogs[] = htmlspecialchars($line, ENT_QUOTES, 'UTF-8');
+            } else {
+                if (!empty($parsedLogs)) {
+                    $parsedLogs[count($parsedLogs) - 1] .= "\n" . htmlspecialchars($line, ENT_QUOTES, 'UTF-8');
+                }
+            }
+        }
+        return $parsedLogs;
+    }
+
+    /**
+     * Toggle refresh UI logs via AJAX.
+     */
+    public function toggleRefreshLog()
+    {
+        // Fetch logs
+        $logs = $this->fetchLogs();
+
+        // Return a JSON response
+        return response()->json([
+            'success' => true,
+            'message' => 'Logs refreshed successfully.',
+            'logs' => $logs,
+        ]);
+    }
+
+
+
+    /**
+     * Clear all log files.
+     */
+    public function toggleClearLog()
+    {
+        $logPath = storage_path('logs');
+        $logFiles = File::glob($logPath . '/*.log');
+
+        foreach ($logFiles as $file) {
+            if (!File::delete($file)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Failed to delete log file: " . basename($file),
+                ], 500);
+            }
+        }
+
+        if (config('app.logging_enabled')) {
+            Log::info('All log files have been cleared.');
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'All logs have been cleared successfully.',
+        ]);
     }
 
 

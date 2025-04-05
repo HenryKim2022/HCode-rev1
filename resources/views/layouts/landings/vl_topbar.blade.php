@@ -382,7 +382,7 @@
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
                         <!-- item-->
                         <div class=" dropdown-header noti-title">
-                            <h6 class="text-overflow m-0">Welcome !</h6>
+                            <h6 class="text-overflow m-0">Welcome <span class="text-capitalize">{{ getAuthUserRole() }}</span> !</h6>
                         </div>
 
                         <!-- item-->
@@ -410,7 +410,7 @@
                         </a>
 
                         <!-- item-->
-                        <a href="auth-logout-2.html" class="dropdown-item">
+                        <a href="{{ route('logout') }}" class="dropdown-item">
                             <i class="ri-logout-box-line fs-18 align-middle me-1"></i>
                             <span>Logout</span>
                         </a>

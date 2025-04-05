@@ -45,10 +45,17 @@
                                                     ? "<i class='mdi mdi-lightbulb-on text-green-600'></i> Debug"
                                                     : "<i class='mdi mdi-lightbulb-off text-danger'></i> Debug" !!}</a>
                                         </li>
+                                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
+                                                data-bs-target="#logging-activities" type="button" role="tab"
+                                                aria-controls="home" aria-selected="false"
+                                                href="#logging-activities">{!! config('app.logging_enabled')
+                                                    ? "<i class='mdi mdi-lightbulb-on text-green-600'></i> Logs"
+                                                    : "<i class='mdi mdi-lightbulb-off text-danger'></i> Logs" !!}</a>
+                                        </li>
 
                                     </ul>
 
-                                    <div class="tab-content m-0 p-1">
+                                    <div class="tab-content m-0 p-0">
                                         <div class="tab-pane active" id="maintenance-activities" role="tabpanel"
                                             aria-labelledby="home-tab" tabindex="0">
                                             <small class="text-capitalize fs-17 text-dark">Exclude From Maintenance</small>
@@ -116,56 +123,158 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="debug-activities" role="tabpanel"
-                                        aria-labelledby="home-tab" tabindex="0">
 
-                                        <small class="text-capitalize fs-17 text-dark">Laravel Debugging</small>
-                                        <form id="debug-form" action="{{ route('syssettings.toggledebug') }}"
-                                            method="POST">
-                                            @csrf
-                                            <table class="table table-condensed mb-0 border-top">
-                                                <tbody>
-                                                    <tr>
-                                                        <th scope="row">
-                                                            Debugging({{ config('app.debug') ? 'On' : 'Off' }})</th>
-                                                        <td>
-                                                            <div class="mb-3">
-                                                                <div class="form-check">
-                                                                    <input type="radio" id="debug_true"
-                                                                        name="app_debug" value="true"
-                                                                        class="form-check-input"
-                                                                        {{ config('app.debug') ? 'checked' : '' }}>
-                                                                    <label for="debug_true"
-                                                                        class="form-check-label">Enable
-                                                                        Debugging</label>
+                                    <div class="tab-content m-0 p-0">
+                                        <div class="tab-pane" id="debug-activities" role="tabpanel"
+                                            aria-labelledby="home-tab" tabindex="0">
+
+                                            <small class="text-capitalize fs-17 text-dark">Laravel Debugging</small>
+                                            <form id="debug-form" action="{{ route('syssettings.toggledebug') }}"
+                                                method="POST">
+                                                @csrf
+                                                <table class="table table-condensed mb-0 border-top">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row">
+                                                                Debugging({{ config('app.debug') ? 'On' : 'Off' }})</th>
+                                                            <td>
+                                                                <div class="mb-3">
+                                                                    <div class="form-check">
+                                                                        <input type="radio" id="debug_true"
+                                                                            name="app_debug" value="true"
+                                                                            class="form-check-input"
+                                                                            {{ config('app.debug') ? 'checked' : '' }}>
+                                                                        <label for="debug_true"
+                                                                            class="form-check-label">Enable
+                                                                            Debugging</label>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <div class="form-check">
-                                                                    <input type="radio" id="debug_false"
-                                                                        name="app_debug" value="false"
-                                                                        class="form-check-input"
-                                                                        {{ !config('app.debug') ? 'checked' : '' }}>
-                                                                    <label for="debug_false"
-                                                                        class="form-check-label">Disable
-                                                                        Debugging</label>
+                                                                <div class="mb-3">
+                                                                    <div class="form-check">
+                                                                        <input type="radio" id="debug_false"
+                                                                            name="app_debug" value="false"
+                                                                            class="form-check-input"
+                                                                            {{ !config('app.debug') ? 'checked' : '' }}>
+                                                                        <label for="debug_false"
+                                                                            class="form-check-label">Disable
+                                                                            Debugging</label>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
 
-                                                        </td>
+                                                            </td>
 
-                                                    </tr>
-
-
-                                                </tbody>
-                                            </table>
-                                            <div class="d-flex justify-content-center align-content-center">
-
-                                        </form>
+                                                        </tr>
 
 
+                                                    </tbody>
+                                                </table>
+                                                <div class="d-flex justify-content-center align-content-center">
 
+                                            </form>
+
+
+
+                                        </div>
                                     </div>
+
+                                    <div class="tab-content m-0 p-0">
+                                        <div class="tab-pane" id="logging-activities" role="tabpanel"
+                                            aria-labelledby="home-tab" tabindex="0">
+
+                                            <small class="text-capitalize fs-17 text-dark">Laravel Logging</small>
+                                            <form id="logging-form" action="{{ route('syssettings.togglelogging') }}"
+                                                method="POST">
+                                                @csrf
+                                                <table class="table table-condensed mb-0 border-top">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row">
+                                                                Logging({{ config('app.logging_enabled') ? 'On' : 'Off' }})
+                                                            </th>
+                                                            <td>
+                                                                <div class="mb-3">
+                                                                    <div class="form-check">
+                                                                        <input type="radio" id="logging_true"
+                                                                            name="app_logging" value="true"
+                                                                            class="form-check-input"
+                                                                            {{ config('app.logging_enabled') ? 'checked' : '' }}>
+                                                                        <label for="logging_true"
+                                                                            class="form-check-label">Enable
+                                                                            Logging</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <div class="form-check">
+                                                                        <input type="radio" id="logging_false"
+                                                                            name="app_logging" value="false"
+                                                                            class="form-check-input"
+                                                                            {{ !config('app.logging_enabled') ? 'checked' : '' }}>
+                                                                        <label for="logging_false"
+                                                                            class="form-check-label">Disable
+                                                                            Logging</label>
+                                                                    </div>
+                                                                </div>
+
+                                                            </td>
+
+                                                        </tr>
+
+
+                                                    </tbody>
+                                                </table>
+                                                <div class="d-flex justify-content-center align-content-center">
+
+                                            </form>
+
+
+                                            <!-- Logs Section -->
+                                            <div class="mt-4 col-12">
+                                                <div class="d-flex justify-content-between align-content-center">
+                                                    <h5 class="text-dark">Recent Logs</h5>
+                                                    <div class="">
+                                                        <button id="fetchLogs" class="btn btn-secondary mt-2">Fetch
+                                                            Logs</button>
+                                                        <button id="clearLogs" class="btn btn-secondary mt-2">Clear
+                                                            Logs</button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card">
+                                                    <div class="card-body p-0">
+                                                        @if (isset($laravelLogs))
+                                                            <ul class="list-group list-group-flush">
+                                                                @if (isset($laravelLogs) && count($laravelLogs) > 0)
+                                                                    @foreach ($laravelLogs as $fileName => $logEntries)
+                                                                        <li class="list-group-item">
+                                                                            <strong>{{ $fileName }}</strong>
+                                                                            <pre class="bg-light p-2 mt-2" style="max-height: 300px; overflow-y: auto;">
+                                                                            @foreach ($logEntries as $entry)
+{{ $entry }}
+@endforeach
+                                                                        </pre>
+                                                                        </li>
+                                                                    @endforeach
+                                                                @else
+                                                                    <li class="list-group-item">No logs available.</li>
+                                                                @endif
+                                                            </ul>
+                                                        @else
+                                                            <div class="text-center">
+                                                                Click *Fetch Logs* to Refresh
+                                                            </div>
+                                                        @endif
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+                                        </div>
+                                    </div>
+
+
                                 </div>
 
                             </div> <!-- end profile-desk -->
@@ -278,14 +387,19 @@
                     },
                     success: function(response) {
                         if (response.success) {
-                            console.log('IPs saved successfully:', response);
+                            // console.log('IPs saved successfully:', response);
+                            showToast("System", response.message, "success", true, 6000);
                         } else {
-                            alert('An error occurred while saving IPs.');
+                            // alert('An error occurred while saving IPs.');
+                            showToast("System", `[Inner Error]: ${response.message}`, "error",
+                                true, 6000);
                         }
                     },
                     error: function(error) {
-                        console.error('Error saving IPs:', error);
-                        alert('An error occurred while saving IPs.');
+                        // console.error('Error saving IPs:', error);
+                        // alert('An error occurred while saving IPs.');
+                        showToast("System", `[Outter Error]: ${response.message}`, "error",
+                            true, 6000);
                     },
                 });
             });
@@ -309,14 +423,19 @@
                     },
                     success: function(response) {
                         if (response.success) {
-                            console.log('URIs saved successfully:', response);
+                            // console.log('URIs saved successfully:', response);
+                            showToast("System", response.message, "success", true, 6000);
                         } else {
-                            alert('An error occurred while saving URIs.');
+                            // alert('An error occurred while saving URIs.');
+                            showToast("System", `[Inner Error]: ${response.message}`, "error",
+                                true, 6000);
                         }
                     },
                     error: function(error) {
-                        console.error('Error saving URIs:', error);
-                        alert('An error occurred while saving URIs.');
+                        // console.error('Error saving URIs:', error);
+                        // alert('An error occurred while saving URIs.');
+                        showToast("System", `[Outter Error]: ${response.message}`, "error",
+                            true, 6000);
                     },
                 });
             });
@@ -345,7 +464,11 @@
                         }
                     },
                     error: function(xhr) {
-                        alert('An error occurred while toggling debugging.');
+                        // alert('An error occurred while toggling debugging.');
+                        showToast("System",
+                            `[Outter Error]: An error occurred while toggling debugging.`,
+                            "error",
+                            true, 6000);
                     },
                 });
             });
@@ -366,14 +489,114 @@
                         if (response.success) {
                             alert(response.message); // Show success message
                             window.location.href = response
-                            .redirect; // Redirect to the specified URL
+                                .redirect; // Redirect to the specified URL
                         }
                     },
                     error: function(xhr) {
-                        alert('An error occurred while toggling maintenance mode.');
+                        // alert('An error occurred while toggling maintenance mode.');
+                        showToast("System",
+                            `[Outter Error]: An error occurred while toggling maintenance mode.`,
+                            "error",
+                            true, 6000);
                     },
                 });
             });
+
+            // Handle Logging Toggle on Radio Button Change
+            $('input[name="app_logging"]').on('change', function() {
+                const newLoggingValue = $(this).val(); // Get the selected value (true/false)
+                console.log('Logging toggled to:', newLoggingValue);
+
+                // Send the new debug value to the server
+                $.ajax({
+                    url: "{{ route('syssettings.togglelogging') }}",
+                    method: 'POST',
+                    data: {
+                        app_logging: newLoggingValue,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message);
+                            window.location.href = response
+                                .redirect; // Reload the page to reflect changes
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred while toggling logging.');
+                    },
+                });
+            });
+
+
+            // Handle button to fetch logs dynamically:
+            $('#fetchLogs').on('click', function() {
+                event.preventDefault(); // Prevent any default behavior
+                $.ajax({
+                    url: "{{ route('syssettings.refreshlogs') }}",
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.success) {
+                            let logsHtml = '';
+                            if (response.logs && Object.keys(response.logs).length > 0) {
+                                logsHtml += '<ul class="list-group list-group-flush">';
+                                for (const [fileName, logEntries] of Object.entries(response
+                                        .logs)) {
+                                    logsHtml += `
+                                <li class="list-group-item">
+                                    <strong>${fileName}</strong>
+                                    <pre class="bg-light p-2 mt-2" style="max-height: 300px; overflow-y: auto;">
+                                        ${logEntries.join('\n')}
+                                    </pre>
+                                </li>
+                            `;
+                                }
+                                logsHtml += '</ul>';
+                            } else {
+                                logsHtml = '<div class="text-center">No logs available.</div>';
+                            }
+                            $('#logging-activities .card-body').html(logsHtml);
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred while fetching logs.');
+                    },
+                });
+            });
+
+
+            // Handle Clear Logs button
+            $('#clearLogs').on('click', function(event) {
+                event.preventDefault();
+
+                if (confirm('Are you sure you want to clear all logs? This action cannot be undone.')) {
+                    $.ajax({
+                        url: "{{ route('syssettings.clearlogs') }}",
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                alert(response.message);
+                                $('#logging-activities .card-body ul').html(
+                                    '<li class="list-group-item">No logs available.</li>');
+                            } else {
+                                alert(response.message);
+                            }
+                        },
+                        error: function(xhr) {
+                            alert(
+                                'An error occurred while clearing logs. Please check the server logs for details.');
+                        },
+                    });
+                }
+            });
+
 
         });
     </script>

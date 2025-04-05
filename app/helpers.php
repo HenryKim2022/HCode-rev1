@@ -14,3 +14,11 @@ if (!function_exists('getAccountByEmail')) {
         return \App\Models\AccountsModel::where('email', $email)->first();
     }
 }
+
+
+if (!function_exists('getAuthUserRole')) {
+    function getAuthUserRole()
+    {
+        return auth()->user()->role;
+    }
+}

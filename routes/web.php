@@ -35,6 +35,12 @@ Route::middleware(['setLocale'])->group(function () {
     Route::post('/system/update-maintenance-exclusion', [SystemController::class, 'update'])->name('syssettings.exclusionupdate');
     Route::post('/system/toggle-maintenance', [SystemController::class, 'toggleMaintenance'])->name('syssettings.togglemaintenance');
     Route::post('/system/toggle-debug', [SystemController::class, 'toggleDebug'])->name('syssettings.toggledebug');
+    Route::post('/system/toggle-logging', [SystemController::class, 'toggleLogging'])->name('syssettings.togglelogging');
+    Route::get('/system/refresh-log', [SystemController::class, 'toggleRefreshLog'])->name('syssettings.refreshlogs');
+    Route::post('/system/clear-log', [SystemController::class, 'toggleClearLog'])->name('syssettings.clearlogs');
+    Route::get('/system/clear-log', [SystemController::class, 'toggleClearLog'])->name('syssettings.clearlogs');
+
+
     // Route::post('/system/save-typed-ip', [SystemController::class, 'saveTypedIp'])->name('syssettings.savetyped.ip');
     // Route::post('/system/save-typed-uri', [SystemController::class, 'saveTypedUri'])->name('syssettings.savetyped.uri');
 

@@ -17,7 +17,9 @@ class tb_AccountsSeeder extends Seeder
             [
                 'name' => 'Henry Kim',
                 'email' => 'admin@example.com',
+                'role' => 'superuser',
                 'password' => bcrypt('123456')
+
             ],
             [
                 'name' => 'Chwili',

@@ -1,47 +1,146 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Log In | Velonic - Bootstrap 5 Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully responsive admin theme which can be used to build CRM, CMS,ERP etc." name="description" />
+    <meta content="Techzaa" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ asset('template/assets/images/favicon.ico') }}?v={{ time() }}">
+    <!-- Theme Config Js -->
+    <script src="{{ asset('template/assets/js/config.js') }}?v={{ time() }}"></script>
+    <!-- App css -->
+    <link href="{{ asset('template/assets/css/app.min.css') }}?v={{ time() }}" rel="stylesheet" type="text/css"
+        id="app-style" />
+    <!-- Icons css -->
+    <link href="{{ asset('template/assets/css/icons.min.css') }}?v={{ time() }}" rel="stylesheet"
+        type="text/css" />
+</head>
+<body class="authentication-bg position-relative">
+    <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5 position-relative">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xxl-8 col-lg-10">
+                    <div class="card overflow-hidden">
+                        <div class="row g-0">
+                            <div class="col-lg-6 d-none d-lg-block p-2">
+                                <img src="{{ asset('template/assets/images/auth-img.jpg') }}?v={{ time() }}"
+                                    alt="" class="img-fluid rounded h-100">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="d-flex flex-column h-100">
+                                    <div class="auth-brand p-4">
+                                        <a href="index.html" class="logo-light">
+                                            <img src="{{ asset('template/assets/images/logo.png') }}?v={{ time() }}"
+                                                alt="logo" height="22">
+                                        </a>
+                                        <a href="index.html" class="logo-dark">
+                                            <img src="{{ asset('template/assets/images/logo-dark.png') }}?v={{ time() }}"
+                                                alt="dark logo" height="22">
+                                        </a>
+                                    </div>
+                                    <div class="p-4 my-auto">
+                                        <!-- Session Status -->
+                                        @if (session('status'))
+                                            <div class="alert alert-success mb-4">
+                                                {{ session('status') }}
+                                            </div>
+                                        @endif
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+                                        <h4 class="fs-20">Sign In</h4>
+                                        <p class="text-muted mb-3">Enter your email address and password to access account.</p>
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                        <!-- Validation Errors -->
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger mb-4">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+
+                                        <!-- Form -->
+                                        <form method="POST" action="{{ route('login') }}">
+                                            @csrf
+                                            <div class="mb-3">
+                                                <label for="emailaddress" class="form-label">Email address</label>
+                                                <input class="form-control" type="email" id="emailaddress"
+                                                    name="email" value="{{ old('email') }}" required
+                                                    placeholder="Enter your email">
+                                                @error('email')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="mb-3">
+                                                <a href="{{ route('password.request') }}" class="text-muted float-end"><small>Forgot your password?</small></a>
+                                                <label for="password" class="form-label">Password</label>
+                                                <input class="form-control" type="password" id="password"
+                                                    name="password" required placeholder="Enter your password">
+                                                @error('password')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input"
+                                                        id="remember_me" name="remember">
+                                                    <label class="form-check-label" for="remember_me">Remember me</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-0 text-start">
+                                                <button class="btn btn-soft-primary w-100" type="submit">
+                                                    <i class="ri-login-circle-fill me-1"></i>
+                                                    <span class="fw-bold">Log In</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                        <!-- End Form -->
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="text-dark-emphasis">Don't have an account? <a href="{{ route('register') }}"
+                            class="text-dark fw-bold ms-1 link-offset-3 text-decoration-underline"><b>Sign up</b></a>
+                    </p>
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
         </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <!-- end container -->
+    </div>
+    <!-- end page -->
+    <!-- Footer Start -->
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <span
+                        class="float-md-left d-block d-md-inline-block mt-25 text-sm-center text-md-center text-center">
+                        Copyright &copy;
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>
+                        <a class="ml-25" href="{{ config('app.url') }}" target="_blank">{{ env('APP_ALIAS') }}</a>
+                        <span class="d-none d-sm-inline-block">, All rights Reserved</span>
+                    </span>
+                    <span class="float-md-right d-none d-md-block">Developed by {{ env('APP_DEV') }}</span>
+                </div>
+            </div>
         </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </footer>
+    <!-- end Footer -->
+    <!-- Vendor js -->
+    <script src="{{ asset('template/assets/js/vendor.min.js') }}?v={{ time() }}"></script>
+    <!-- App js -->
+    <script src="{{ asset('template/assets/js/app.min.js') }}?v={{ time() }}"></script>
+</body>
+</html>

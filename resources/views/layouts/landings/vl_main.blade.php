@@ -50,6 +50,8 @@
             @include('v_res.landings.modals.v_aboutus_modal')
             @include('v_res.landings.modals.v_contactus_modal')
 
+            @include('v_res.toasts.v_toast_bundle')
+
             @include('layouts.landings.vl_footer')
         </div>
 
@@ -276,6 +278,8 @@
             </div>
         </div>
     </div>
+
+
 
 
 

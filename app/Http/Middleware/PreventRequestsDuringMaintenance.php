@@ -30,12 +30,13 @@ class PreventRequestsDuringMaintenance extends \Illuminate\Foundation\Http\Middl
 
         // Default URI exclusions
         $default_excluded_uris = [
-            '/reset', // Add leading slash
-            'lang/*',
-            '/system/settings',
-            '/system/update-maintenance-exclusion',
-            '/system/toggle-maintenance',
-            '/system/toggle-debug',
+            '/reset', // Reset password
+            'public/temp', // Public temp files
+            'public/template/*', // Public templates
+            'lang/*', // Language routes
+            'logout', // Logout route
+            '/system/*', // System settings
+
         ];
 
         // Retrieve excluded URIs from settings and split by semicolons
@@ -51,7 +52,7 @@ class PreventRequestsDuringMaintenance extends \Illuminate\Foundation\Http\Middl
 
         // Automatically exclude backend prefix (if configured in config file)
         if (config('mycustomconfig.backend_prefix')) {
-            $this->except[] = '/' . trim(config('mycustomconfig.backend_prefix'), '/') . '*';
+            $urls_allowed[] = '/' . trim(config('mycustomconfig.backend_prefix'), '/') . '*';
         }
 
         // Merge excluded URIs into the $except array
@@ -66,10 +67,12 @@ class PreventRequestsDuringMaintenance extends \Illuminate\Foundation\Http\Middl
             ->toArray();
 
         // Log exclusions for debugging
-        Log::info('Maintenance Mode Exclusions', [
-            'except' => $this->except,
-            'excluded_ips' => $this->excluded_ips,
-        ]);
+        if (config('app.logging_enabled')) {
+            Log::info('Maintenance Mode Exclusions', [
+                'except' => $this->except,
+                'excluded_ips' => $this->excluded_ips,
+            ]);
+        }
     }
 
     /**
@@ -81,26 +84,29 @@ class PreventRequestsDuringMaintenance extends \Illuminate\Foundation\Http\Middl
      */
     public function handle($request, Closure $next)
     {
-        // Log request IP and exclusion status
-        Log::info('Request IP Check', [
-            'request_ip' => $request->ip(),
-            'excluded_ips' => $this->excluded_ips,
-            'is_excluded' => $this->inExceptIpArray($request),
-        ]);
-
-        // Check if the application is in maintenance mode
-        if ($this->app->isDownForMaintenance()) {
-            // Allow requests if they match excluded URIs or IPs
-            if ($this->inExceptArray($request) || $this->inExceptIpArray($request)) {
-                return $next($request);
-            }
-
-            // Throw a 503 error for all other requests
-            throw new HttpException(503);
+        // Log request details for debugging
+        if (config('app.logging_enabled')) {
+            Log::info('Request Details', [
+                'uri' => $request->getPathInfo(),
+                'ip' => $request->ip(),
+                'isDownForMaintenance' => $this->app->isDownForMaintenance(),
+                'isExcludedUri' => $this->inExceptArray($request),
+                'isExcludedIp' => $this->inExceptIpArray($request),
+            ]);
         }
 
-        // If not in maintenance mode, proceed normally
-        return $next($request);
+        // If maintenance mode is off, proceed normally
+        if (!$this->app->isDownForMaintenance()) {
+            return $next($request);
+        }
+
+        // Allow requests if they match excluded URIs or IPs
+        if ($this->inExceptArray($request) || $this->inExceptIpArray($request)) {
+            return $next($request);
+        }
+
+        // Throw a 503 error for all other requests
+        throw new HttpException(503);
     }
 
     /**
