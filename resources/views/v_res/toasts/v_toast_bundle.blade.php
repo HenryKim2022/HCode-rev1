@@ -6,7 +6,7 @@
 
 <!-- Stacked Toast Container -->
 <div id="toast-container" aria-live="polite" aria-atomic="true"
-    style="position: fixed; top: 11%; right: 0%; z-index: 9999;">
+    style="position: fixed; top: 10.8%; right: 0%; z-index: 9999;">
 </div>
 
 
