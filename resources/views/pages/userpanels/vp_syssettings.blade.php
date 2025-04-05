@@ -41,21 +41,12 @@
                                         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
                                                 data-bs-target="#debug-activities" type="button" role="tab"
                                                 aria-controls="home" aria-selected="false"
-                                                href="#debug-activities">{!! config('app.debug')
-                                                    ? "<i class='mdi mdi-lightbulb-on text-green-600'></i> Debug"
-                                                    : "<i class='mdi mdi-lightbulb-off text-danger'></i> Debug" !!}</a>
-                                        </li>
-                                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
-                                                data-bs-target="#logging-activities" type="button" role="tab"
-                                                aria-controls="home" aria-selected="false"
-                                                href="#logging-activities">{!! config('app.logging_enabled')
-                                                    ? "<i class='mdi mdi-lightbulb-on text-green-600'></i> Logs"
-                                                    : "<i class='mdi mdi-lightbulb-off text-danger'></i> Logs" !!}</a>
+                                                href="#debug-activities"><i class='mdi mdi-bug'></i> Debug</a>
                                         </li>
                                         <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
                                                 data-bs-target="#cache-activities" type="button" role="tab"
-                                                aria-controls="home" aria-selected="false"
-                                                href="#cache-activities"><i class='mdi mdi-cached text-green-600'></i> Cache
+                                                aria-controls="home" aria-selected="false" href="#cache-activities"><i
+                                                    class='mdi mdi-cached text-green-600'></i> Cache
                                             </a>
                                         </li>
 
@@ -133,159 +124,155 @@
                                     <div class="tab-content m-0 p-0">
                                         <div class="tab-pane" id="debug-activities" role="tabpanel"
                                             aria-labelledby="home-tab" tabindex="0">
+                                            <section class="debug">
 
-                                            <small class="text-capitalize fs-17 text-dark">Laravel Debugging</small>
-                                            <form id="debug-form" action="{{ route('syssettings.toggledebug') }}"
-                                                method="POST">
-                                                @csrf
+                                                <form id="debug-form" action="{{ route('syssettings.toggledebug') }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <table class="table table-condensed mb-0 border-top">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th scope="row">
+                                                                    <small class="text-capitalize fs-17 text-dark">{!! config('app.debug')
+                                                                        ? "<i class='mdi mdi-lightbulb-on text-success'></i> Laravel Debugging"
+                                                                        : "<i class='mdi mdi-lightbulb-off text-danger'></i> Laravel Debugging" !!}</small>
+                                                                    ({{ config('app.debug') ? 'On' : 'Off' }})
+                                                                </th>
+                                                                <td>
+                                                                    <div class="mb-3">
+                                                                        <div class="form-check">
+                                                                            <input type="radio" id="debug_true"
+                                                                                name="app_debug" value="true"
+                                                                                class="form-check-input"
+                                                                                {{ config('app.debug') ? 'checked' : '' }}>
+                                                                            <label for="debug_true"
+                                                                                class="form-check-label">Enable
+                                                                                Debugging</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <div class="form-check">
+                                                                            <input type="radio" id="debug_false"
+                                                                                name="app_debug" value="false"
+                                                                                class="form-check-input"
+                                                                                {{ !config('app.debug') ? 'checked' : '' }}>
+                                                                            <label for="debug_false"
+                                                                                class="form-check-label">Disable
+                                                                                Debugging</label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </td>
+
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th scope="row">
+                                                                    <small
+                                                                        class="text-capitalize fs-17 text-dark mt-1">{!! config('app.logging_enabled')
+                                                                        ? "<i class='mdi mdi-lightbulb-on text-success'></i> Laravel Logging"
+                                                                        : "<i class='mdi mdi-lightbulb-off text-danger'></i> Laravel Logging" !!}</small>
+                                                                    ({{ config('app.logging_enabled') ? 'On' : 'Off' }})
+                                                                </th>
+                                                                <td>
+                                                                    <div class="mb-3">
+                                                                        <div class="form-check">
+                                                                            <input type="radio" id="logging_true"
+                                                                                name="app_logging" value="true"
+                                                                                class="form-check-input"
+                                                                                {{ config('app.logging_enabled') ? 'checked' : '' }}>
+                                                                            <label for="logging_true"
+                                                                                class="form-check-label">Enable
+                                                                                Logging</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <div class="form-check">
+                                                                            <input type="radio" id="logging_false"
+                                                                                name="app_logging" value="false"
+                                                                                class="form-check-input"
+                                                                                {{ !config('app.logging_enabled') ? 'checked' : '' }}>
+                                                                            <label for="logging_false"
+                                                                                class="form-check-label">Disable
+                                                                                Logging</label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </td>
+
+                                                            </tr>
+
+
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="d-flex justify-content-center align-content-center">
+
+                                                </form>
+
+                                            </section>
+
+                                            <section class="log">
                                                 <table class="table table-condensed mb-0 border-top">
                                                     <tbody>
                                                         <tr>
-                                                            <th scope="row">
-                                                                Debugging({{ config('app.debug') ? 'On' : 'Off' }})</th>
-                                                            <td>
-                                                                <div class="mb-3">
-                                                                    <div class="form-check">
-                                                                        <input type="radio" id="debug_true"
-                                                                            name="app_debug" value="true"
-                                                                            class="form-check-input"
-                                                                            {{ config('app.debug') ? 'checked' : '' }}>
-                                                                        <label for="debug_true"
-                                                                            class="form-check-label">Enable
-                                                                            Debugging</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <div class="form-check">
-                                                                        <input type="radio" id="debug_false"
-                                                                            name="app_debug" value="false"
-                                                                            class="form-check-input"
-                                                                            {{ !config('app.debug') ? 'checked' : '' }}>
-                                                                        <label for="debug_false"
-                                                                            class="form-check-label">Disable
-                                                                            Debugging</label>
+                                                            <th>
+                                                                <div
+                                                                    scope="row d-flex justify-content-between align-content-center">
+                                                                    <div
+                                                                        class="d-flex justify-content-between align-content-center">
+                                                                        <button id="fetchLogs"
+                                                                            class="btn btn-secondary mt-2">Fetch
+                                                                            Logs</button>
+                                                                        <button id="clearLogs"
+                                                                            class="btn btn-secondary mt-2">Clear
+                                                                            Logs</button>
                                                                     </div>
                                                                 </div>
 
-                                                            </td>
-
-                                                        </tr>
-
-
-                                                    </tbody>
-                                                </table>
-                                                <div class="d-flex justify-content-center align-content-center">
-
-                                            </form>
-
-
-
-                                        </div>
-                                    </div>
-
-                                    <div class="tab-content m-0 p-0">
-                                        <div class="tab-pane" id="logging-activities" role="tabpanel"
-                                            aria-labelledby="home-tab" tabindex="0">
-
-                                            <small class="text-capitalize fs-17 text-dark">Laravel Logging</small>
-                                            <form id="logging-form" action="{{ route('syssettings.togglelogging') }}"
-                                                method="POST">
-                                                @csrf
-                                                <table class="table table-condensed mb-0 border-top">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th scope="row">
-                                                                Logging({{ config('app.logging_enabled') ? 'On' : 'Off' }})
                                                             </th>
-                                                            <td>
-                                                                <div class="mb-3">
-                                                                    <div class="form-check">
-                                                                        <input type="radio" id="logging_true"
-                                                                            name="app_logging" value="true"
-                                                                            class="form-check-input"
-                                                                            {{ config('app.logging_enabled') ? 'checked' : '' }}>
-                                                                        <label for="logging_true"
-                                                                            class="form-check-label">Enable
-                                                                            Logging</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <div class="form-check">
-                                                                        <input type="radio" id="logging_false"
-                                                                            name="app_logging" value="false"
-                                                                            class="form-check-input"
-                                                                            {{ !config('app.logging_enabled') ? 'checked' : '' }}>
-                                                                        <label for="logging_false"
-                                                                            class="form-check-label">Disable
-                                                                            Logging</label>
-                                                                    </div>
-                                                                </div>
-
-                                                            </td>
-
                                                         </tr>
 
 
                                                     </tbody>
                                                 </table>
-                                                <div class="d-flex justify-content-center align-content-center">
 
-                                            </form>
-
-
-                                            <!-- Logs Section -->
-                                            <div class="mt-4 col-12">
-                                                <div class="d-flex justify-content-between align-content-center">
-                                                    <h5 class="text-dark">Recent Logs</h5>
-                                                    <div class="">
-                                                        <button id="fetchLogs" class="btn btn-secondary mt-2">Fetch
-                                                            Logs</button>
-                                                        <button id="clearLogs" class="btn btn-secondary mt-2">Clear
-                                                            Logs</button>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card">
-                                                    <div class="card-body p-0">
-                                                        @if (isset($laravelLogs))
-                                                            <ul class="list-group list-group-flush">
-                                                                @if (isset($laravelLogs) && count($laravelLogs) > 0)
-                                                                    @foreach ($laravelLogs as $fileName => $logEntries)
-                                                                        <li class="list-group-item">
-                                                                            <strong>{{ $fileName }}</strong>
-                                                                            <pre class="bg-light p-2 mt-2" style="max-height: 300px; overflow-y: auto;">
+                                                <div class="mb-3 logs-container">
+                                                    @if (isset($laravelLogs))
+                                                        <ul class="list-group list-group-flush">
+                                                            @foreach ($laravelLogs as $fileName => $logEntries)
+                                                                <li class="list-group-item">
+                                                                    <strong>{{ $fileName }}</strong>
+                                                                    <pre class="bg-light p-2 mt-2"
+                                                                        style="max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-wrap: normal;">
                                                                             @foreach ($logEntries as $entry)
 {{ $entry }}
 @endforeach
-                                                                        </pre>
-                                                                        </li>
-                                                                    @endforeach
-                                                                @else
-                                                                    <li class="list-group-item">No logs available.</li>
-                                                                @endif
-                                                            </ul>
-                                                        @else
-                                                            <div class="text-center">
-                                                                Click *Fetch Logs* to Refresh
-                                                            </div>
-                                                        @endif
-
-                                                    </div>
+                                                                    </pre>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @else
+                                                        <div class="text-center">
+                                                            Click *Fetch Logs* to Refresh
+                                                        </div>
+                                                    @endif
                                                 </div>
-                                            </div>
+                                            </section>
 
 
 
 
                                         </div>
                                     </div>
+
+
 
 
                                     <div class="tab-content m-0 p-0">
                                         <div class="tab-pane" id="cache-activities" role="tabpanel"
                                             aria-labelledby="home-tab" tabindex="0">
                                             <small class="text-capitalize fs-17 text-dark">Cache Management</small>
-                                            <div class="card mt-3">
+                                            <div class="card">
                                                 <div class="card-body">
                                                     <p class="text-muted">Manage and clear application cache.</p>
                                                     <div class="d-grid gap-2">
@@ -575,19 +562,18 @@
                                 for (const [fileName, logEntries] of Object.entries(response
                                         .logs)) {
                                     logsHtml += `
-                                <li class="list-group-item">
-                                    <strong>${fileName}</strong>
-                                    <pre class="bg-light p-2 mt-2" style="max-height: 300px; overflow-y: auto;">
-                                        ${logEntries.join('\n')}
-                                    </pre>
-                                </li>
-                            `;
+                                        <li class="list-group-item">
+                                            <strong>${fileName}</strong>
+                                            <pre class="bg-light p-2 mt-2" style="max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-wrap: normal;">${logEntries.join('\n')}</pre>
+                                        </li>
+                                    `;
                                 }
                                 logsHtml += '</ul>';
                             } else {
                                 logsHtml = '<div class="text-center">No logs available.</div>';
                             }
-                            $('#logging-activities .card-body').html(logsHtml);
+                            $('#debug-activities section.log .logs-container').html(logsHtml);
+
                         } else {
                             alert(response.message);
                         }
@@ -597,6 +583,7 @@
                     },
                 });
             });
+
 
 
             // Handle Clear Logs button
@@ -613,8 +600,8 @@
                         success: function(response) {
                             if (response.success) {
                                 alert(response.message);
-                                $('#logging-activities .card-body ul').html(
-                                    '<li class="list-group-item">No logs available.</li>');
+                                $('#debug-activities section.log .logs-container ul').html(
+                                    '<div class="text-center">No logs available.</div>');
                             } else {
                                 alert(response.message);
                             }
@@ -627,6 +614,7 @@
                     });
                 }
             });
+
 
 
             /* CACHE */
