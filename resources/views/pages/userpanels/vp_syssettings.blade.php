@@ -52,6 +52,12 @@
                                                     ? "<i class='mdi mdi-lightbulb-on text-green-600'></i> Logs"
                                                     : "<i class='mdi mdi-lightbulb-off text-danger'></i> Logs" !!}</a>
                                         </li>
+                                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
+                                                data-bs-target="#cache-activities" type="button" role="tab"
+                                                aria-controls="home" aria-selected="false"
+                                                href="#cache-activities"><i class='mdi mdi-cached text-green-600'></i> Cache
+                                            </a>
+                                        </li>
 
                                     </ul>
 
@@ -273,6 +279,30 @@
 
                                         </div>
                                     </div>
+
+
+                                    <div class="tab-content m-0 p-0">
+                                        <div class="tab-pane" id="cache-activities" role="tabpanel"
+                                            aria-labelledby="home-tab" tabindex="0">
+                                            <small class="text-capitalize fs-17 text-dark">Cache Management</small>
+                                            <div class="card mt-3">
+                                                <div class="card-body">
+                                                    <p class="text-muted">Manage and clear application cache.</p>
+                                                    <div class="d-grid gap-2">
+                                                        <button id="clear-app-cache" class="btn btn-primary">Clear
+                                                            Application Cache</button>
+                                                        <button id="clear-config-cache" class="btn btn-secondary">Clear
+                                                            Config Cache</button>
+                                                        <button id="clear-route-cache" class="btn btn-info">Clear Route
+                                                            Cache</button>
+                                                        <button id="clear-view-cache" class="btn btn-warning">Clear View
+                                                            Cache</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
 
                                 </div>
@@ -591,10 +621,97 @@
                         },
                         error: function(xhr) {
                             alert(
-                                'An error occurred while clearing logs. Please check the server logs for details.');
+                                'An error occurred while clearing logs. Please check the server logs for details.'
+                            );
                         },
                     });
                 }
+            });
+
+
+            /* CACHE */
+            // Handle Clear Application Cache
+            $('#clear-app-cache').on('click', function() {
+                $.ajax({
+                    url: "{{ route('syssettings.clearappcache') }}",
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message);
+                        } else {
+                            alert('Failed to clear application cache.');
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred while clearing application cache.');
+                    },
+                });
+            });
+
+            // Handle Clear Config Cache
+            $('#clear-config-cache').on('click', function() {
+                $.ajax({
+                    url: "{{ route('syssettings.clearconfigcache') }}",
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message);
+                        } else {
+                            alert('Failed to clear config cache.');
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred while clearing config cache.');
+                    },
+                });
+            });
+
+            // Handle Clear Route Cache
+            $('#clear-route-cache').on('click', function() {
+                $.ajax({
+                    url: "{{ route('syssettings.clearroutecache') }}",
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message);
+                        } else {
+                            alert('Failed to clear route cache.');
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred while clearing route cache.');
+                    },
+                });
+            });
+
+            // Handle Clear View Cache
+            $('#clear-view-cache').on('click', function() {
+                $.ajax({
+                    url: "{{ route('syssettings.clearviewcache') }}",
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message);
+                        } else {
+                            alert('Failed to clear view cache.');
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred while clearing view cache.');
+                    },
+                });
             });
 
 

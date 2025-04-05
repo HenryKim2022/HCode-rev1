@@ -373,6 +373,64 @@ class SystemController extends Controller
 
 
 
+
+    /**
+     * Clear application cache.
+     */
+    public function clearAppCache()
+    {
+        try {
+            Artisan::call('cache:clear');
+            return $this->jsonResponse(true, 'Application cache cleared successfully.');
+        } catch (\Exception $e) {
+            return $this->jsonResponse(false, 'Failed to clear application cache.');
+        }
+    }
+
+    /**
+     * Clear configuration cache.
+     */
+    public function clearConfigCache()
+    {
+        try {
+            Artisan::call('config:clear');
+            return $this->jsonResponse(true, 'Configuration cache cleared successfully.');
+        } catch (\Exception $e) {
+            return $this->jsonResponse(false, 'Failed to clear configuration cache.');
+        }
+    }
+
+    /**
+     * Clear route cache.
+     */
+    public function clearRouteCache()
+    {
+        try {
+            Artisan::call('route:clear');
+            return $this->jsonResponse(true, 'Route cache cleared successfully.');
+        } catch (\Exception $e) {
+            return $this->jsonResponse(false, 'Failed to clear route cache.');
+        }
+    }
+
+    /**
+     * Clear view cache.
+     */
+    public function clearViewCache()
+    {
+        try {
+            Artisan::call('view:clear');
+            return $this->jsonResponse(true, 'View cache cleared successfully.');
+        } catch (\Exception $e) {
+            return $this->jsonResponse(false, 'Failed to clear view cache.');
+        }
+    }
+
+
+
+
+
+
     /**
      * Centralized JSON response helper method.
      */
